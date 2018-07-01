@@ -3,10 +3,7 @@
 - name: Elevated playbook tasks on localhost
   hosts: 127.0.0.1
   connection: local
-  become: yes
-  vars: 
-    nvm_ver: v0.33.11
-    node_ver: 8.11.3
+  become: yes    
   tasks:
 
   - name: print out the hostname of target
@@ -30,6 +27,7 @@
   vars: 
     nvm_ver: v0.33.11
     node_ver: 8.11.3
+    shell_rc_path: ~/.bashrc
   tasks:
   
   - name: print out the hostname of target
@@ -49,10 +47,12 @@
   - name: add PIP to path
     blockinfile:
       state: present
-      path:  ~/.bashrc
+      path: "{{ vars.shell_rc_path }}"
       block: |
-        #Python Pip
         export PATH=$PATH:$HOME/.local/bin
+      insertafter: EOF
+      marker_begin: PIP_BEGIN
+      marker_end: PIP_END
       backup: yes
 
   - name: get NVM
@@ -63,9 +63,24 @@
   - name: install NVM
     command: bash /tmp/nvm_install.sh
   
-  - name: Reload bashrc
-    command: source ~/.bashrc
+  - name: test for NVM loaded in file
+    shell: "grep NVM {{ vars.shell_rc_path }}"
+    register: test_nvm_in_dotfile 
   
-  - name: install node via NVM
-    command: "nvm install {{ vars.node_ver }}"
+  - name: load NVM into shell if not exists
+    blockinfile:
+      path: "{{ vars.shell_rc_path }}"
+      backup: yes
+      insertafter: EOF
+      marker_begin: NVM_BEGIN
+      marker_end: NVM_END
+      block: |
+        export NVM_DIR="$HOME/.nvm"
+        [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+        [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+      state: present
+    when: test_nvm_in_dotfile.stdout == "0"
+        
+  - name: Reload bashrc
+    shell: . ~/.bashrc
     
