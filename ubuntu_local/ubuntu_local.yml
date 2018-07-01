@@ -1,0 +1,71 @@
+---
+
+- name: Elevated playbook tasks on localhost
+  hosts: 127.0.0.1
+  connection: local
+  become: yes
+  vars: 
+    nvm_ver: v0.33.11
+    node_ver: 8.11.3
+  tasks:
+
+  - name: print out the hostname of target
+    command: echo $HOSTNAME
+  
+  - name: update the apt package index i.e. apt-get update
+    apt: update_cache=yes
+
+  - name: upgrade system packages i.e. apt-get upgrade
+    apt: upgrade=yes
+  
+  - name: install required packages
+    command: apt install git geary build-essential dropbox meld cheese curl python3-distutils -y
+  
+  - name: remove thunderbird
+    command: apt autoremove thunderbird -y
+  
+- name: Non-Elevated playbook tasks on localhost
+  hosts: 127.0.0.1
+  connection: local
+  vars: 
+    nvm_ver: v0.33.11
+    node_ver: 8.11.3
+  tasks:
+  
+  - name: print out the hostname of target
+    command: echo $HOSTNAME
+  
+  - name: get pip
+    get_url:
+      url: https://bootstrap.pypa.io/get-pip.py
+      dest: /tmp/get-pip.py
+  
+  - name: install PIP
+    command: python /tmp/get-pip.py --user
+  
+  - name: install PIP3
+    command: python3 /tmp/get-pip.py --user
+  
+  - name: add PIP to path
+    blockinfile:
+      state: present
+      path:  ~/.bashrc
+      block: |
+        #Python Pip
+        export PATH=$PATH:$HOME/.local/bin
+      backup: yes
+
+  - name: get NVM
+    get_url:
+      url: "https://raw.githubusercontent.com/creationix/nvm/{{ vars.nvm_ver }}/install.sh"
+      dest: /tmp/nvm_install.sh
+  
+  - name: install NVM
+    command: bash /tmp/nvm_install.sh
+  
+  - name: Reload bashrc
+    command: source ~/.bashrc
+  
+  - name: install node via NVM
+    command: "nvm install {{ vars.node_ver }}"
+    
