@@ -30,7 +30,7 @@
     apt: upgrade=yes
   
   - name: install required packages
-    command: apt install git geary build-essential dropbox meld cheese curl python3-distutils apt-transport-https ca-certificates docker-ce -y
+    command: apt install git geary build-essential dropbox meld cheese curl python3-distutils apt-transport-https ca-certificates docker-ce tlp -y
   
   - name: remove thunderbird
     command: apt autoremove thunderbird -y
