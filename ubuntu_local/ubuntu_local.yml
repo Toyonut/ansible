@@ -34,7 +34,7 @@
   - name: install required packages
     apt: 
       name: "{{ packages }}"
-      state: present
+      state: latest
     vars:
       packages: 
         - git 
