@@ -22,7 +22,7 @@
     get_url: 
       url: https://packages.microsoft.com/config/ubuntu/18.04/prod.list
       dest: /etc/apt/sources.list.d/microsoft-prod.list
-    when: not lists.stat.exists
+    when: not lists_exists.stat.exists
   
   - name: set microsoft file permissions
     file:
