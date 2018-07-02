@@ -12,11 +12,17 @@
   - name: convert asc to gpg
     shell: gpg --dearmor /tmp/microsoft.asc > /etc/apt/trusted.gpg.d/microsoft.asc.gpg
     when: not asc_exists.stat.exists
-
+  
+  - name: check if microsoft-prod.lists exists   
+    stat: 
+      path: /etc/apt/sources.list.d/microsoft-prod.list
+    register: lists_exists
+  
   - name: get prod list
     get_url: 
       url: https://packages.microsoft.com/config/ubuntu/18.04/prod.list
       dest: /etc/apt/sources.list.d/microsoft-prod.list
+    when: not lists.stat.exists
   
   - name: set microsoft file permissions
     file:
