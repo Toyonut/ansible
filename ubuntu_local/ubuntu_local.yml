@@ -24,12 +24,11 @@
   
   - name: add docker repo
     command: add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu {{ vars.release }} stable"
-  
-  - name: update the apt package index i.e. apt-get update
-    apt: update_cache=yes
 
-  - name: upgrade system packages i.e. apt-get upgrade
-    apt: upgrade=yes
+  - name: update and upgrade system packages
+    apt: 
+      update_cache: yes
+      upgrade: yes
   
   - name: install required packages
     apt: 
@@ -80,11 +79,23 @@
       url: https://bootstrap.pypa.io/get-pip.py
       dest: /tmp/get-pip.py
   
+  - name: check if pip exists   
+    stat: 
+      path: ~/.local/bin/pip
+    register: pip_exists
+  
+  - name: check if pip3 exists   
+    stat: 
+      path: ~/.local/bin/pip3
+    register: pip3_exists
+  
   - name: install PIP
     command: python /tmp/get-pip.py --user
+    when: not pip_exists
   
   - name: install PIP3
     command: python3 /tmp/get-pip.py --user
+    when: not pip3_exists
   
   - name: add PIP to path
     blockinfile:
