@@ -1,0 +1,38 @@
+---
+  - name: download gpg key
+    get_url: 
+      url: "https://packages.microsoft.com/keys/microsoft.asc"
+      dest: /tmp/microsoft.asc
+  
+  - name: check if microsoft.asc.gpg exists   
+    stat: 
+      path: /etc/apt/trusted.gpg.d/microsoft.asc.gpg
+    register: asc_exists
+  
+  - name: convert asc to gpg
+    shell: gpg --dearmor /tmp/microsoft.asc > /etc/apt/trusted.gpg.d/microsoft.asc.gpg
+    when: not asc_exists.stat.exists
+
+  - name: get prod list
+    get_url: 
+      url: https://packages.microsoft.com/config/ubuntu/18.04/prod.list
+      dest: /etc/apt/sources.list.d/microsoft-prod.list
+  
+  - name: set microsoft file permissions
+    file:
+      path: "{{ item }}"
+      owner: root
+      group: root
+    with_items:
+     - /etc/apt/trusted.gpg.d/microsoft.asc.gpg
+     - /etc/apt/sources.list.d/microsoft-prod.list
+  
+  - name: install dotnet packages and deps with apt
+    apt:
+      name: "{{ packages }}"
+      state: present
+      update_cache: yes
+    vars: 
+      packages:
+        - apt-transport-https
+        - dotnet-sdk-2.1  
