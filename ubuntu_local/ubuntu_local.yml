@@ -32,10 +32,29 @@
     apt: upgrade=yes
   
   - name: install required packages
-    command: apt install git geary build-essential dropbox meld cheese curl python3-distutils apt-transport-https ca-certificates docker-ce tlp -y
+    apt: 
+      name: "{{ packages }}"
+      state: present
+    vars:
+      packages: 
+        - git 
+        - geary 
+        - build-essential 
+        - dropbox 
+        - meld 
+        - cheese 
+        - curl 
+        - python3-distutils 
+        - apt-transport-https 
+        - ca-certificates 
+        - docker-ce 
+        - tlp
   
   - name: remove thunderbird
-    command: apt autoremove thunderbird -y
+    apt:
+      name: thunderbird
+      state: absent
+      autoremove: yes
   
   - name: adding existing user '{{ vars.user }}' to group docker
     user:
