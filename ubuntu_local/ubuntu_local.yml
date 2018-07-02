@@ -23,12 +23,14 @@
     command: apt-key add /tmp/docker_gpg
   
   - name: add docker repo
-    command: add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu {{ vars.release }} stable"
+    apt_repository:
+      repo: "deb [arch=amd64] https://download.docker.com/linux/ubuntu {{ vars.release }} stable"
+      state: present
 
   - name: update and upgrade system packages
     apt: 
       update_cache: yes
-      upgrade: yes
+      upgrade: full
   
   - name: install required packages
     apt: 
