@@ -1,0 +1,32 @@
+---
+  - name: get docker gpg key
+    get_url:
+      url: https://download.docker.com/linux/ubuntu/gpg
+      dest: /tmp/docker_gpg
+  
+  - name: install docker gpg key
+    command: apt-key add /tmp/docker_gpg
+  
+  - name: add docker repo
+    apt_repository:
+      repo: "deb [arch=amd64] https://download.docker.com/linux/ubuntu {{ vars.release }} stable"
+      state: present
+
+  - name: update and upgrade system packages
+    apt: 
+      update_cache: yes
+      upgrade: full
+  
+  - name: install required packages
+    apt: 
+      name: "{{ packages }}"
+      state: latest
+    vars:
+      packages: 
+        - docker-ce 
+  
+  - name: adding existing user '{{ vars.user }}' to group docker
+    user:
+      name: '{{ vars.user }}'
+      groups: docker
+      append: yes
