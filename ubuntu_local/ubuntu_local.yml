@@ -98,6 +98,32 @@
   - name: install NVM
     command: bash /tmp/nvm_install.sh
   
+  - name: check if oh-my-zsh exists   
+    stat: 
+      path: ~/.oh-my-zsh
+    register: zsh_installed
+
+  - name: check if my zsh theme exists   
+    stat: 
+      path: ~/.oh-my-zsh/themes/paul.zsh-theme
+    register: zsh_theme_installed
+  
+  - name: get oh-my-zsh
+    get_url: 
+      url: " https://raw.github.com/robbyrussell/oh-my-zsh/master/tools/install.sh"
+      dest: /tmp/oh_my_zsh_install.sh
+    when: not zsh_installed
+  
+  - name: install oh-my-zsh
+    command: bash /tmp/oh_my_zsh_install.sh
+    when: not zsh_installed
+  
+  - name: get my zsh theme
+    get_url:
+      url: "https://raw.githubusercontent.com/Toyonut/zsh-theme/master/paul.zsh-theme"
+      dest: ~/.oh-my-zsh/themes/paul.zsh-theme
+    when: not zsh_theme_installed
+  
   - name: test for NVM loaded in file
     shell: "grep NVM {{ vars.shell_rc_path }}"
     register: test_nvm_in_dotfile 
