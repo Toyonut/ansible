@@ -24,6 +24,7 @@
     vars:
       packages: 
         - docker-ce 
+        - docker-compose
   
   - name: adding existing user '{{ vars.user }}' to group docker
     user:

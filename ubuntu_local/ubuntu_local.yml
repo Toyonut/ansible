@@ -50,7 +50,7 @@
   vars: 
     nvm_ver: v0.33.11
     node_ver: 8.11.3
-    shell_rc_path: ~/.bashrc
+    shell_rc_path: ~/.zshrc
   tasks:
   
   - name: print out the hostname of target
@@ -127,6 +127,7 @@
   - name: test for NVM loaded in file
     shell: "grep NVM {{ vars.shell_rc_path }}"
     register: test_nvm_in_dotfile 
+    ignore_errors: true
   
   - name: load NVM into shell if not exists
     blockinfile:
@@ -140,8 +141,5 @@
         [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
         [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
       state: present
-    when: test_nvm_in_dotfile.stdout == "0"
-        
-  - name: Reload bashrc
-    shell: . ~/.bashrc
+    when: test_nvm_in_dotfile.stdout == ""
     
