@@ -5,6 +5,7 @@
   connection: local
   become: yes
   roles:
+    - role: powershell_core
     - role: dotnet_core_sdk
     - role: docker
       user: paul 
@@ -147,4 +148,3 @@
         [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
       state: present
     when: test_nvm_in_dotfile.stdout == ""
-    
