@@ -36,12 +36,17 @@
         - ca-certificates 
         - tlp
         - zsh
+        - vim
         - fonts-powerline
+        - fonts-firacode 
   
   - name: remove thunderbird
     apt:
       name: thunderbird
       state: absent
+
+  - name: Remove dependencies that are no longer required
+    apt:
       autoremove: yes
   
 - name: Non-Elevated playbook tasks on localhost
