@@ -1,37 +1,18 @@
 ---
-  - name: download gpg key
+  - name: check of packages-microsoft-prod.deb exists
+    stat:
+      path: /tmp/packages-microsoft-prod.deb
+    register: ms_package_exists
+
+  - name: download 
     get_url: 
-      url: "https://packages.microsoft.com/keys/microsoft.asc"
-      dest: /tmp/microsoft.asc
+      url: "https://packages.microsoft.com/config/ubuntu/18.04/packages-microsoft-prod.deb"
+      dest: /tmp/packages-microsoft-prod.deb
+    when: not ms_package_exists.stat.exists
   
-  - name: check if microsoft.asc.gpg exists   
-    stat: 
-      path: /etc/apt/trusted.gpg.d/microsoft.asc.gpg
-    register: asc_exists
-  
-  - name: convert asc to gpg
-    shell: gpg --dearmor /tmp/microsoft.asc > /etc/apt/trusted.gpg.d/microsoft.asc.gpg
-    when: not asc_exists.stat.exists
-  
-  - name: check if microsoft-prod.lists exists   
-    stat: 
-      path: /etc/apt/sources.list.d/microsoft-prod.list
-    register: lists_exists
-  
-  - name: get prod list
-    get_url: 
-      url: https://packages.microsoft.com/config/ubuntu/18.04/prod.list
-      dest: /etc/apt/sources.list.d/microsoft-prod.list
-    when: not lists_exists.stat.exists
-  
-  - name: set microsoft file permissions
-    file:
-      path: "{{ item }}"
-      owner: root
-      group: root
-    with_items:
-     - /etc/apt/trusted.gpg.d/microsoft.asc.gpg
-     - /etc/apt/sources.list.d/microsoft-prod.list
+  - name: install ms package
+    apt:
+      deb: /tmp/packages-microsoft-prod.deb
   
   - name: install dotnet packages and deps with apt
     apt:
