@@ -41,7 +41,8 @@
         - curl 
         - python3-distutils 
         - apt-transport-https 
-        - ca-certificates 
+        - ca-certificates
+        - postgresql
         - tlp
         - zsh
         - vim
@@ -63,7 +64,7 @@
   vars: 
     nvm_ver: 'v0.33.11'
     node_ver: '8.11.3'
-    shell_rc_path: ~/.bashrc
+    shell_rc_path: ~/.zshrc
   tasks:
   
   - name: print out the hostname of target
