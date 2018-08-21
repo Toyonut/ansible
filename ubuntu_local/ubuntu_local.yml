@@ -17,7 +17,8 @@
     - role: dotnet_core_sdk
     - role: docker
       user: paul 
-      release: bionic
+    - role: golang
+      shell_rc_path: ~/.zshrc
   tasks:
   - name: print out the hostname of target
     command: echo $HOSTNAME
