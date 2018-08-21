@@ -1,6 +1,6 @@
 ---
   - name: install Snap if not installed
-    apt: 
+    apt:
       name: snapd
       state: latest
 

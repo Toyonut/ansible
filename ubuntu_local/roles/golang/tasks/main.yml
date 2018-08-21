@@ -3,12 +3,12 @@
     apt_repository:
       repo: "ppa:gophers/archive"
       state: present
-  
+
   - name: install Golang 10
-    apt: 
+    apt:
       package: golang-1.10-go
       state: present
-  
+
   - name: add Go to path
     blockinfile:
       state: present
