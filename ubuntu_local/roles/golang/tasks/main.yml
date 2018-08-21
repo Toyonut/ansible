@@ -20,3 +20,15 @@
       marker_end: GO_END
       backup: yes
     become: no
+
+  - name: set GOPATH
+    blockinfile:
+      state: present
+      path: "{{ vars.shell_rc_path }}"
+      block: |
+        export GOPATH=$HOME/source/go
+      insertafter: EOF
+      marker_begin: GOPATH_BEGIN
+      marker_end: GOPATH_END
+      backup: yes
+    become: no
