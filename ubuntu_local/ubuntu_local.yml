@@ -16,7 +16,7 @@
     - role: powershell_core
     - role: dotnet_core_sdk
     - role: docker
-      user: paul 
+      user: paul
     - role: golang
       shell_rc_path: ~/.zshrc
   tasks:
@@ -24,32 +24,32 @@
     command: echo $HOSTNAME
 
   - name: update and upgrade system packages
-    apt: 
+    apt:
       update_cache: yes
       upgrade: full
-  
+
   - name: install required packages
-    apt: 
+    apt:
       name: "{{ packages }}"
       state: latest
     vars:
-      packages: 
-        - git 
-        - geary 
-        - build-essential  
-        - meld 
-        - cheese 
-        - curl 
-        - python3-distutils 
-        - apt-transport-https 
+      packages:
+        - git
+        - geary
+        - build-essential
+        - meld
+        - cheese
+        - curl
+        - python3-distutils
+        - apt-transport-https
         - ca-certificates
         - postgresql
         - tlp
         - zsh
         - vim
         - fonts-powerline
-        - fonts-firacode 
-  
+        - fonts-firacode
+
   - name: remove thunderbird
     apt:
       name: thunderbird
@@ -58,42 +58,60 @@
   - name: Remove dependencies that are no longer required
     apt:
       autoremove: yes
-  
+
 - name: Non-Elevated playbook tasks on localhost
   hosts: 127.0.0.1
   connection: local
-  vars: 
+  become: no
+  vars:
     nvm_ver: 'v0.33.11'
-    node_ver: '8.11.3'
+    node_ver: '8.11.4'
     shell_rc_path: ~/.zshrc
   tasks:
-  
-  - name: print out the hostname of target
-    command: echo $HOSTNAME
-  
+
+  - name: check if oh-my-zsh exists
+    stat:
+      path: ~/.oh-my-zsh
+    register: zsh_installed
+
+  - name: get oh-my-zsh
+    get_url:
+      url: " https://raw.github.com/robbyrussell/oh-my-zsh/master/tools/install.sh"
+      dest: /tmp/oh_my_zsh_install.sh
+    when: not zsh_installed.stat.exists
+
+  - name: install oh-my-zsh
+    command: bash /tmp/oh_my_zsh_install.sh
+    when: not zsh_installed.stat.exists
+
+  - name: get my zsh theme
+    get_url:
+      url: "https://raw.githubusercontent.com/Toyonut/zsh-theme/master/paul.zsh-theme"
+      dest: ~/.oh-my-zsh/themes/paul.zsh-theme
+
   - name: get pip
     get_url:
       url: https://bootstrap.pypa.io/get-pip.py
       dest: /tmp/get-pip.py
-  
-  - name: check if pip exists   
-    stat: 
+
+  - name: check if pip exists
+    stat:
       path: ~/.local/bin/pip
     register: pip_exists
-  
-  - name: check if pip3 exists   
-    stat: 
+
+  - name: check if pip3 exists
+    stat:
       path: ~/.local/bin/pip3
     register: pip3_exists
-  
+
   - name: install PIP
     command: python /tmp/get-pip.py --user
     when: not pip_exists.stat.exists
-  
+
   - name: install PIP3
     command: python3 /tmp/get-pip.py --user
     when: not pip3_exists.stat.exists
-  
+
   - name: add PIP to path
     blockinfile:
       state: present
@@ -109,41 +127,15 @@
     get_url:
       url: "https://raw.githubusercontent.com/creationix/nvm/{{ vars.nvm_ver }}/install.sh"
       dest: /tmp/nvm_install.sh
-  
+
   - name: install NVM
     command: bash /tmp/nvm_install.sh
-  
-  - name: check if oh-my-zsh exists   
-    stat: 
-      path: ~/.oh-my-zsh
-    register: zsh_installed
 
-  - name: check if my zsh theme exists   
-    stat: 
-      path: ~/.oh-my-zsh/themes/paul.zsh-theme
-    register: zsh_theme_installed
-  
-  - name: get oh-my-zsh
-    get_url: 
-      url: " https://raw.github.com/robbyrussell/oh-my-zsh/master/tools/install.sh"
-      dest: /tmp/oh_my_zsh_install.sh
-    when: not zsh_installed
-  
-  - name: install oh-my-zsh
-    command: bash /tmp/oh_my_zsh_install.sh
-    when: not zsh_installed
-  
-  - name: get my zsh theme
-    get_url:
-      url: "https://raw.githubusercontent.com/Toyonut/zsh-theme/master/paul.zsh-theme"
-      dest: ~/.oh-my-zsh/themes/paul.zsh-theme
-    when: not zsh_theme_installed
-  
   - name: test for NVM loaded in file
     shell: "grep NVM {{ vars.shell_rc_path }}"
-    register: test_nvm_in_dotfile 
+    register: test_nvm_in_dotfile
     ignore_errors: true
-  
+
   - name: load NVM into shell if not exists
     blockinfile:
       path: "{{ vars.shell_rc_path }}"
