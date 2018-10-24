@@ -44,11 +44,12 @@
         - apt-transport-https
         - ca-certificates
         - postgresql
-        - tlp
         - zsh
         - vim
         - fonts-powerline
         - fonts-firacode
+        - keepassxc
+        - tilix
 
   - name: remove thunderbird
     apt:
