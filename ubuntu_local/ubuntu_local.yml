@@ -50,6 +50,7 @@
         - fonts-firacode
         - keepassxc
         - tilix
+        - tlp
 
   - name: remove thunderbird
     apt:
