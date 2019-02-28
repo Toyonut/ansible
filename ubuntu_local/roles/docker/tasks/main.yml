@@ -1,29 +1,37 @@
 ---
-  - name: get docker gpg key
-    get_url:
-      url: https://download.docker.com/linux/ubuntu/gpg
-      dest: /tmp/docker_gpg
+- name: Get current user
+  command: whoami
+  register: username
 
-  - name: install docker gpg key
-    command: apt-key add /tmp/docker_gpg
+- name: get docker gpg key
+  get_url:
+    url: https://download.docker.com/linux/ubuntu/gpg
+    dest: /tmp/docker_gpg
 
-  - name: add docker repo
-    apt_repository:
-      repo: "deb [arch=amd64] https://download.docker.com/linux/ubuntu {{ ansible_distribution_release }} stable"
-      state: present
+- name: install docker gpg key
+  command: apt-key add /tmp/docker_gpg
+  become: yes
 
-  - name: install required packages
-    apt:
-      name: "{{ packages }}"
-      state: latest
-      update_cache: yes
-    vars:
-      packages:
-        - docker-ce
-        - docker-compose
+- name: add docker repo
+  apt_repository:
+    repo: "deb [arch=amd64] https://download.docker.com/linux/ubuntu {{ ansible_distribution_release }} stable"
+    state: present
+  become: yes
 
-  - name: adding existing user '{{ vars.user }}' to group docker
-    user:
-      name: '{{ vars.user }}'
-      groups: docker
-      append: yes
+- name: install required packages
+  apt:
+    name: "{{ packages }}"
+    state: latest
+    update_cache: yes
+  vars:
+    packages:
+      - docker-ce
+      - docker-compose
+  become: yes
+
+- name: adding existing user '{{ username.stdout }}' to group docker
+  user:
+    name: '{{ username.stdout }}'
+    groups: docker
+    append: yes
+  become: yes
