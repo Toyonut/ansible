@@ -1,25 +1,27 @@
 ---
-  - name: check of packages-microsoft-prod.deb exists
-    stat:
-      path: /tmp/packages-microsoft-prod.deb
-    register: ms_package_exists
+- name: check of packages-microsoft-prod.deb exists
+  stat:
+    path: /tmp/packages-microsoft-prod.deb
+  register: ms_package_exists
 
-  - name: download
-    get_url:
-      url: "https://packages.microsoft.com/config/ubuntu/18.04/packages-microsoft-prod.deb"
-      dest: /tmp/packages-microsoft-prod.deb
-    when: not ms_package_exists.stat.exists
+- name: download
+  get_url:
+    url: "https://packages.microsoft.com/config/ubuntu/18.04/packages-microsoft-prod.deb"
+    dest: /tmp/packages-microsoft-prod.deb
+  when: not ms_package_exists.stat.exists
 
-  - name: install ms package
-    apt:
-      deb: /tmp/packages-microsoft-prod.deb
+- name: install ms package
+  apt:
+    deb: /tmp/packages-microsoft-prod.deb
+  become: yes
 
-  - name: install dotnet packages and deps with apt
-    apt:
-      name: "{{ packages }}"
-      state: latest
-      update_cache: yes
-    vars:
-      packages:
-        - apt-transport-https
-        - dotnet-sdk-2.1
+- name: install dotnet packages and deps with apt
+  apt:
+    name: "{{ packages }}"
+    state: latest
+    update_cache: yes
+  vars:
+    packages:
+      - apt-transport-https
+      - dotnet-sdk-2.1
+  become: yes
