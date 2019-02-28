@@ -1,14 +1,16 @@
 ---
-  - name: install Snap if not installed
-    apt:
-      name: snapd
-      state: latest
+- name: install Snap if not installed
+  apt:
+    name: snapd
+    state: latest
+  become: yes
 
-  - name: check Powershell installed
-    shell: which pwsh
-    register: powershell_installed
-    ignore_errors: yes
+- name: check Powershell installed
+  shell: which pwsh
+  register: powershell_installed
+  ignore_errors: yes
 
-  - name: install Powershell if not installed
-    command: snap install powershell --classic
-    when: powershell_installed.stdout != '/snap/bin/pwsh'
+- name: install Powershell if not installed
+  command: snap install powershell --classic
+  when: powershell_installed.stdout != '/snap/bin/pwsh'
+  become: yes
