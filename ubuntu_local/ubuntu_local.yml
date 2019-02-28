@@ -1,37 +1,24 @@
 ---
-- name: kill elementary appcenter
+- name: Set up a local Ubuntu machine
   connection: local
-  become: yes
   hosts: 127.0.0.1
+
   tasks:
     - name: kill elementary appcenter
       command: pkill -f io.elementary.appcenter
       ignore_errors: yes
 
-- name: Elevated playbook tasks on localhost
-  hosts: 127.0.0.1
-  connection: local
-  become: yes
-  roles:
-    - role: powershell_core
-    - role: dotnet_core_sdk
-    - role: docker
-      user: paul
-    - role: golang
-      shell_rc_path: ~/.zshrc
-  tasks:
-  - name: print out the hostname of target
-    command: echo $HOSTNAME
-
   - name: update and upgrade system packages
     apt:
       update_cache: yes
       upgrade: full
+      become: yes
 
   - name: install required packages
     apt:
       name: "{{ packages }}"
       state: latest
+        autoremove: yes
     vars:
       packages:
         - git
@@ -51,15 +38,18 @@
         - keepassxc
         - tilix
         - tlp
+      become: yes
 
   - name: remove thunderbird
     apt:
       name: thunderbird
       state: absent
+      become: yes
 
-  - name: Remove dependencies that are no longer required
-    apt:
-      autoremove: yes
+  roles:
+    - powershell_core
+    - dotnet_core_sdk
+    - docker
 
 - name: Non-Elevated playbook tasks on localhost
   hosts: 127.0.0.1
