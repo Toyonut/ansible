@@ -1,0 +1,5 @@
+dotnet_sdk: dotnet-sdk-2.2
+
+dotnet_packages:
+  - apt-transport-https
+  - "{{ dotnet_sdk }}"
