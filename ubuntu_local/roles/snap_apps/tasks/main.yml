@@ -1,0 +1,35 @@
+- name: Check Snap is installed
+  apt:
+    name: snapd
+    state: present
+  become: yes
+
+- name: Check installed Snap apps
+  command: snap list
+  register: snap_list_output
+
+- set_fact:
+    installed_snap_apps: []
+
+- name: Build installed Snap apps list
+  set_fact:
+    installed_snap_apps: "{{ installed_snap_apps + [item.split(' ')[0]] }}"
+  with_items: "{{ snap_list_output.stdout_lines }}"
+
+- name: Install Snap apps
+  command: "snap install {{ item.name }}"
+  when:
+    - snap_apps is defined
+    - "item.name | string not in installed_snap_apps"
+    - "not item.classic"
+  with_items: "{{ snap_packages }}"
+  become: yes
+
+- name: Install classic confinement Snap apps
+  command: "snap install {{ item.name }} --classic"
+  when:
+    - snap_apps is defined
+    - "item.name | string not in installed_snap_apps"
+    - "item.classic"
+  with_items: "{{ snap_packages }}"
+  become: yes

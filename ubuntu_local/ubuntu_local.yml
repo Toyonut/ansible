@@ -38,13 +38,13 @@
         - keepassxc
         - tilix
         - tlp
-      become: yes
-
-  - name: remove thunderbird
-    apt:
-      name: thunderbird
-      state: absent
-      become: yes
+    snap_packages:
+      - { name: bitwarden, classic: False }
+      - { name: libreoffice, classic: False }
+      - { name: pycharm-professional, classic: True }
+      - { name: remmina, classic: False }
+      - { name: spotify, classic: False }
+      - { name: sublime-text, classic: True}
 
   roles:
     - powershell_core
