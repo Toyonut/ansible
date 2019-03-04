@@ -1,8 +1,4 @@
 ---
-- name: Get current user
-  command: whoami
-  register: username
-
 - name: get docker gpg key
   get_url:
     url: https://download.docker.com/linux/ubuntu/gpg
@@ -25,9 +21,9 @@
     update_cache: yes
   become: yes
 
-- name: adding existing user '{{ username.stdout }}' to group docker
+- name: adding existing user '{{ ansible_user_id }}' to group docker
   user:
-    name: '{{ username.stdout }}'
+    name: '{{ ansible_user_id }}'
     groups: docker
     append: yes
   become: yes
