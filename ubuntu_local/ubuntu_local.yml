@@ -2,25 +2,8 @@
 - name: Set up a local Ubuntu machine
   connection: local
   hosts: 127.0.0.1
-
-  tasks:
-    - name: kill elementary appcenter
-      command: pkill -f io.elementary.appcenter
-      ignore_errors: yes
-
-  - name: update and upgrade system packages
-    apt:
-      update_cache: yes
-      upgrade: full
-      become: yes
-
-  - name: install required packages
-    apt:
-      name: "{{ packages }}"
-      state: latest
-        autoremove: yes
     vars:
-      packages:
+    apt_packages:
         - git
         - geary
         - build-essential
@@ -50,31 +33,31 @@
     - powershell_core
     - dotnet_core_sdk
     - docker
+    - {name: snap_apps, snap_apps: "{{ snap_packages }}"}
 
-- name: Non-Elevated playbook tasks on localhost
-  hosts: 127.0.0.1
-  connection: local
-  become: no
-  vars:
-    nvm_ver: 'v0.33.11'
-    node_ver: '8.12.0'
-    shell_rc_path: ~/.zshrc
   tasks:
+    - name: kill elementary appcenter
+      command: pkill -f io.elementary.appcenter
+      ignore_errors: yes
 
-  - name: check if oh-my-zsh exists
-    stat:
-      path: ~/.oh-my-zsh
-    register: zsh_installed
+    - name: update and upgrade system packages
+      apt:
+        update_cache: yes
+        upgrade: full
+      become: yes
 
-  - name: get oh-my-zsh
-    get_url:
-      url: " https://raw.github.com/robbyrussell/oh-my-zsh/master/tools/install.sh"
-      dest: /tmp/oh_my_zsh_install.sh
-    when: not zsh_installed.stat.exists
+    - name: install required packages
+      apt:
+        name: "{{ apt_packages }}"
+        state: latest
+        autoremove: yes
+      become: yes
 
-  - name: install oh-my-zsh
-    command: bash /tmp/oh_my_zsh_install.sh
-    when: not zsh_installed.stat.exists
+    - name: remove thunderbird
+      apt:
+        name: thunderbird
+        state: absent
+      become: yes
 
   - name: get my zsh theme
     get_url:
