@@ -20,13 +20,9 @@
 
 - name: install required packages
   apt:
-    name: "{{ packages }}"
+    name: "{{ docker_packages }}"
     state: latest
     update_cache: yes
-  vars:
-    packages:
-      - docker-ce
-      - docker-compose
   become: yes
 
 - name: adding existing user '{{ username.stdout }}' to group docker
