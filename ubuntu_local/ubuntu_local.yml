@@ -30,7 +30,8 @@
       - { name: pycharm-professional, classic: True }
       - { name: remmina, classic: False }
       - { name: spotify, classic: False }
-      - { name: sublime-text, classic: True}
+      - { name: sublime-text, classic: True }
+      - { name: heroku, classic: True }
 
   roles:
     - { name: base_system_tasks, apt_packages: "{{ apt_package_list }}" }
