@@ -4,9 +4,9 @@
       repo: "ppa:gophers/archive"
       state: present
 
-  - name: install Golang 10
+  - name: install Golang {{ go_version }}
     apt:
-      package: golang-1.10-go
+      package: golang-{{ go_version }}-go
       state: present
 
   - name: add Go to path
