@@ -1,0 +1,5 @@
+node_version: lts
+
+dependencies_packages:
+  - make
+  - git
