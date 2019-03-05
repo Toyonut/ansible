@@ -3,7 +3,7 @@
   connection: local
   hosts: 127.0.0.1
   vars:
-    apt_packages:
+    apt_package_list:
       - git
       - geary
       - build-essential
@@ -21,7 +21,7 @@
       - keepassxc
       - tilix
       - tlp
-    snap_packages:
+    snap_package_list:
       - { name: bitwarden, classic: False }
       - { name: libreoffice, classic: False }
       - { name: pycharm-professional, classic: True }
@@ -30,46 +30,9 @@
       - { name: sublime-text, classic: True}
 
   roles:
+    - { name: base_system_tasks, apt_packages: apt_package_list }
     - powershell_core
     - dotnet_core_sdk
     - docker
-    - {name: snap_apps, snap_apps: "{{ snap_packages }}"}
+    - { name: snap_apps, snap_apps: "{{ snap_package_list }}" }
     - node
-
-  tasks:
-    - name: kill elementary appcenter
-      command: pkill -f io.elementary.appcenter
-      ignore_errors: yes
-
-    - name: update and upgrade system packages
-      apt:
-        update_cache: yes
-        upgrade: full
-      become: yes
-
-    - name: install required packages
-      apt:
-        name: "{{ apt_packages }}"
-        state: latest
-        autoremove: yes
-      become: yes
-
-    - name: remove thunderbird
-      apt:
-        name: thunderbird
-        state: absent
-      become: yes
-
-    - name: Remove apt libreoffice
-      apt:
-        name: libreoffice*
-        state: absent
-        autoremove: yes
-        purge: yes
-
-    - name: get my zsh theme
-    get_url:
-      url: "https://raw.githubusercontent.com/Toyonut/zsh-theme/master/paul.zsh-theme"
-      dest: ~/.oh-my-zsh/themes/paul.zsh-theme
-
-
