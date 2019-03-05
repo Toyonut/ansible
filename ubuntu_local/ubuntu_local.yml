@@ -2,25 +2,25 @@
 - name: Set up a local Ubuntu machine
   connection: local
   hosts: 127.0.0.1
-    vars:
+  vars:
     apt_packages:
-        - git
-        - geary
-        - build-essential
-        - meld
-        - cheese
-        - curl
-        - python3-distutils
-        - apt-transport-https
-        - ca-certificates
-        - postgresql
-        - zsh
-        - vim
-        - fonts-powerline
-        - fonts-firacode
-        - keepassxc
-        - tilix
-        - tlp
+      - git
+      - geary
+      - build-essential
+      - meld
+      - cheese
+      - curl
+      - python3-distutils
+      - apt-transport-https
+      - ca-certificates
+      - postgresql
+      - zsh
+      - vim
+      - fonts-powerline
+      - fonts-firacode
+      - keepassxc
+      - tilix
+      - tlp
     snap_packages:
       - { name: bitwarden, classic: False }
       - { name: libreoffice, classic: False }
@@ -34,6 +34,7 @@
     - dotnet_core_sdk
     - docker
     - {name: snap_apps, snap_apps: "{{ snap_packages }}"}
+    - node
 
   tasks:
     - name: kill elementary appcenter
@@ -66,68 +67,9 @@
         autoremove: yes
         purge: yes
 
-  - name: get my zsh theme
+    - name: get my zsh theme
     get_url:
       url: "https://raw.githubusercontent.com/Toyonut/zsh-theme/master/paul.zsh-theme"
       dest: ~/.oh-my-zsh/themes/paul.zsh-theme
 
-  - name: get pip
-    get_url:
-      url: https://bootstrap.pypa.io/get-pip.py
-      dest: /tmp/get-pip.py
 
-  - name: check if pip exists
-    stat:
-      path: ~/.local/bin/pip
-    register: pip_exists
-
-  - name: check if pip3 exists
-    stat:
-      path: ~/.local/bin/pip3
-    register: pip3_exists
-
-  - name: install PIP
-    command: python /tmp/get-pip.py --user
-    when: not pip_exists.stat.exists
-
-  - name: install PIP3
-    command: python3 /tmp/get-pip.py --user
-    when: not pip3_exists.stat.exists
-
-  - name: add PIP to path
-    blockinfile:
-      state: present
-      path: "{{ vars.shell_rc_path }}"
-      block: |
-        export PATH=$PATH:$HOME/.local/bin
-      insertafter: EOF
-      marker_begin: PIP_BEGIN
-      marker_end: PIP_END
-      backup: yes
-
-  - name: get NVM
-    get_url:
-      url: "https://raw.githubusercontent.com/creationix/nvm/{{ vars.nvm_ver }}/install.sh"
-      dest: /tmp/nvm_install.sh
-
-  - name: install NVM
-    command: bash /tmp/nvm_install.sh
-
-  - name: test for NVM loaded in file
-    shell: "grep NVM {{ vars.shell_rc_path }}"
-    register: test_nvm_in_dotfile
-    ignore_errors: true
-
-  - name: load NVM into shell if not exists
-    blockinfile:
-      path: "{{ vars.shell_rc_path }}"
-      backup: yes
-      insertafter: EOF
-      marker_begin: NVM_BEGIN
-      marker_end: NVM_END
-      block: |
-        export NVM_DIR="$HOME/.nvm"
-        [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
-        [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
-      state: present
-    when: test_nvm_in_dotfile.stdout == ""
