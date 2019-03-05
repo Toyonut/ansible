@@ -14,7 +14,7 @@
       state: present
       path: "{{ vars.shell_rc_path }}"
       block: |
-        export PATH=$PATH:/usr/lib/go-1.10/bin
+        export PATH=$PATH:/usr/lib/go-{{ go_version }}/bin
       insertafter: EOF
       marker_begin: GO_BEGIN
       marker_end: GO_END
