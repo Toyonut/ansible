@@ -21,6 +21,9 @@
       - keepassxc
       - tilix
       - tlp
+      - nautilus-dropbox
+      - python3
+
     snap_package_list:
       - { name: bitwarden, classic: False }
       - { name: libreoffice, classic: False }
