@@ -33,6 +33,7 @@
       - { name: sublime-text, classic: True}
 
   roles:
+    - vscode
     - chrome
     - powershell_core
     - dotnet_core_sdk
