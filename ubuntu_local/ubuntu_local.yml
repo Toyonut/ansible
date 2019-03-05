@@ -30,7 +30,7 @@
       - { name: sublime-text, classic: True}
 
   roles:
-    - { name: base_system_tasks, apt_packages: apt_package_list }
+    - chrome
     - powershell_core
     - dotnet_core_sdk
     - docker
