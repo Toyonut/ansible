@@ -1,0 +1,13 @@
+---
+- name: Check Gnome is installed
+  shell: "dpkg --get-selections | grep gnome-shell"
+  register: gnome_installed
+  ignore_errors: yes
+
+- name: Install Gnome extensions apt
+  apt:
+    name: "{{ extensions}}"
+    state: present
+  when:
+    - gnome_installed.stdout != ""
+    - extensions is defined
