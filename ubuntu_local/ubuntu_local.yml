@@ -33,12 +33,18 @@
       - { name: sublime-text, classic: True }
       - { name: heroku, classic: True }
 
+    gnome_extensions_list:
+      - gnome-shell-extension-appindicator
+      - gnome-shell-extension-dashtodock
+      - gnome-tweak-tool
+
   roles:
     - { name: base_system_tasks, apt_packages: "{{ apt_package_list }}" }
+    - { name: gnome_extensions, extensions: "{{ gnome_extensions_list }}" }
+    - { name: snap_apps, snap_apps: "{{ snap_package_list }}" }
     - vscode
     - chrome
     - powershell_core
     - dotnet_core_sdk
     - docker
-    - { name: snap_apps, snap_apps: "{{ snap_package_list }}" }
     - node
