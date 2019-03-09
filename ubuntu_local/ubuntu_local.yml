@@ -23,6 +23,7 @@
       - tlp
       - nautilus-dropbox
       - python3
+      - transmission
 
     snap_package_list:
       - { name: bitwarden, classic: False }
