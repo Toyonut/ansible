@@ -24,6 +24,7 @@
       - nautilus-dropbox
       - python3
       - transmission
+      - steam
 
     snap_package_list:
       - { name: bitwarden, classic: False }
