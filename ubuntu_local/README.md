@@ -3,7 +3,7 @@
 ## Install Ansible
 
 ``` bash
-sudo ./setup.sh
+./setup.sh
 ```
 
 ## Run Ansible
