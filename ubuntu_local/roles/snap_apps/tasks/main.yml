@@ -23,7 +23,7 @@
     - snap_apps is defined
     - "item.name | string not in installed_snap_apps"
     - "not item.classic"
-  with_items: "{{ snap_packages }}"
+  with_items: "{{ snap_apps }}"
   become: yes
 
 - name: Install classic confinement Snap apps
@@ -32,5 +32,5 @@
     - snap_apps is defined
     - "item.name | string not in installed_snap_apps"
     - "item.classic"
-  with_items: "{{ snap_packages }}"
+  with_items: "{{ snap_apps }}"
   become: yes
