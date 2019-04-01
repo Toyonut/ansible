@@ -31,6 +31,6 @@
     purge: yes
 
 - name: get my zsh theme
-get_url:
-  url: "https://raw.githubusercontent.com/Toyonut/zsh-theme/master/paul.zsh-theme"
-  dest: ~/.oh-my-zsh/themes/paul.zsh-theme
+  get_url:
+    url: "https://raw.githubusercontent.com/Toyonut/zsh-theme/master/paul.zsh-theme"
+    dest: ~/.oh-my-zsh/themes/paul.zsh-theme
