@@ -20,7 +20,7 @@
 - name: Install Snap packages
   command: "snap install {{ item.name }}"
   when:
-    - snap_apps is defined
+    - snap_packages is defined
     - "item.name | string not in installed_snap_packages"
     - "not item.classic"
   with_items: "{{ snap_packages }}"
@@ -29,7 +29,7 @@
 - name: Install classic confinement Snap packages
   command: "snap install {{ item.name }} --classic"
   when:
-    - snap_apps is defined
+    - snap_packages is defined
     - "item.name | string not in installed_snap_packages"
     - "item.classic"
   with_items: "{{ snap_packages }}"
