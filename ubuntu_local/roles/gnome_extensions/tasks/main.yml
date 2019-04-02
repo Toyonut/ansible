@@ -11,3 +11,4 @@
   when:
     - gnome_installed.stdout != ""
     - extensions is defined
+  become: yes
