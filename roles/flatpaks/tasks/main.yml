@@ -1,0 +1,39 @@
+---
+- name: Add Flathub signing key
+  apt_key:
+    keyserver: keyserver.ubuntu.com
+    id: 690951F1A4DE0F905496E8C6C793BFA2FA577F07
+  when: flatpak_install_ppa
+  become: yes
+
+- name: Install Flathub ppa
+  apt_repository:
+    repo: ppa:alexlarsson/flatpak
+    state: present
+    update_cache: yes
+  when:
+    - flatpak_install_ppa
+    - ansible_distribution == 'Ubuntu'
+    - ansible_distribution_version < "18.10"
+  become: yes
+
+- name: Install Flatpak pre-reqs
+  apt:
+    name: "{{ flatpak_pre_req_packages }}"
+    update-cache: Yes
+    state: present
+  become: yes
+
+- name: Add Flatpak remote
+  flatpak_remote:
+    name: "{{ item.name }}"
+    flatpakrepo_url: "{{ item.remote_url }}"
+  with_items: "{{ flatpak_repos }}"
+  become: yes
+
+- name: Install Flatpak apps
+  flatpak:
+    name: "{{ item.name }}"
+    remote: "{{ item.remote }}"
+  with_items: "{{ flatpaks }}"
+  become: yes

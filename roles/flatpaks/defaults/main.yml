@@ -1,0 +1,7 @@
+flatpak_pre_req_packages:
+  - flatpak
+
+flatpak_install_ppa: True
+
+flatpak_repos:
+  - { name: flathub, remote_url: "https://flathub.org/repo/flathub.flatpakrepo" }
