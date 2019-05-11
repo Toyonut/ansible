@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-ANSIBLE_VER="2.7.9"
+ANSIBLE_VER="2.7.10"
 
 sudo apt-get install python-pip python3-pip software-properties-common
 
