@@ -28,12 +28,9 @@
 
     snap_package_list:
       - { name: bitwarden, classic: False }
-      - { name: libreoffice, classic: False }
       - { name: pycharm-professional, classic: True }
-      - { name: spotify, classic: False }
       - { name: sublime-text, classic: True }
       - { name: heroku, classic: True }
-      - { name: slack, classic: True}
       - { name: android-studio, classic: True}
 
     gnome_extensions_list:
@@ -44,6 +41,10 @@
     flatpak_list:
       - { name: us.zoom.Zoom, remote: flathub}
       - { name: org.gnome.meld, remote: flathub}
+      - { name: net.bartkessels.getit, remote: flathub }
+      - { name: org.libreoffice.LibreOffice, remote: flathub }
+      - { name: com.spotify.Client, remote: flathub }
+      - { name: com.slack.Slack, remote: flathub }
 
   roles:
     - { name: base_system_tasks, apt_packages: "{{ apt_package_list }}" }
