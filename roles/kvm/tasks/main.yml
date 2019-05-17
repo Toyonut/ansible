@@ -1,0 +1,21 @@
+---
+- name: Check kvm enabled
+  command: egrep -c '(vmx|svm)' /proc/cpuinfo
+  become: yes
+  register: kvm_enabled
+
+- name: Install KVM pre-requisite packages
+  apt:
+    name: "{{ kvm_packages }}"
+    state: present
+  become: yes
+  when: kvm_enabled.stdout > "0"
+
+- name: Ensure libvirtd service enabled and started
+  systemd:
+    name: libvirtd
+    state: started
+    enabled: yes
+    daemon_reload: yes
+  become: yes
+  when: kvm_enabled.stdout > "0"

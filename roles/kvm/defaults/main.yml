@@ -1,0 +1,13 @@
+pre_run_packages:
+  - cpu-checker
+
+kvm_packages:
+  - qemu
+  - qemu-kvm
+  - libvirt-bin
+  - bridge-utils
+  - virt-manager
+
+groups:
+  - libvirt
+  - libvirt-qemu
