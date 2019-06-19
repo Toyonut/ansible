@@ -26,6 +26,7 @@
       - transmission
       - steam
       - remmina
+      - ffmpeg
 
     snap_package_list:
       - { name: bitwarden, classic: False }
