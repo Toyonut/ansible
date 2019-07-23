@@ -47,6 +47,7 @@
       - { name: org.libreoffice.LibreOffice, remote: flathub }
       - { name: com.spotify.Client, remote: flathub }
       - { name: com.slack.Slack, remote: flathub }
+      - { name: org.openttd.OpenTTD, remote: flathub }
 
   roles:
     - { name: base_system_tasks, apt_packages: "{{ apt_package_list }}" }
