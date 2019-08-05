@@ -33,7 +33,6 @@
       - { name: pycharm-professional, classic: True }
       - { name: sublime-text, classic: True }
       - { name: heroku, classic: True }
-      - { name: android-studio, classic: True }
       - { name: intellij-idea-community, classic: True }
 
     gnome_extensions_list:
