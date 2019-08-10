@@ -1,10 +1,4 @@
 ---
-- name: Add Flathub signing key
-  apt_key:
-    keyserver: keyserver.ubuntu.com
-    id: 690951F1A4DE0F905496E8C6C793BFA2FA577F07
-  when: flatpak_install_ppa
-  become: yes
 
 - name: Install Flathub ppa
   apt_repository:
