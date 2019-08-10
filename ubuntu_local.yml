@@ -30,7 +30,7 @@
 
     snap_package_list:
       - { name: bitwarden, classic: False }
-      - { name: pycharm-professional, classic: True }
+      - { name: pycharm-community, classic: True }
       - { name: sublime-text, classic: True }
       - { name: heroku, classic: True }
       - { name: intellij-idea-community, classic: True }
