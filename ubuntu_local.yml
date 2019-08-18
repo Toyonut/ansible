@@ -27,6 +27,7 @@
       - steam
       - remmina
       - ffmpeg
+      - solaar-gnome3
 
     snap_package_list:
       - { name: bitwarden, classic: False }
