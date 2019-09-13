@@ -1,0 +1,21 @@
+---
+- name: Ensure Brave linux signing key present
+  apt_key:
+    url: https://brave-browser-apt-release.s3.brave.com/brave-core.asc
+    keyring: "/etc/apt/trusted.gpg.d/brave-browser-release.gpg"
+    state: present
+  become: yes
+
+- name: Ensure Brave browser repo present
+  apt_repository:
+    repo: "deb [arch=amd64] https://brave-browser-apt-release.s3.brave.com/ {{ ansible_distribution_release }} main"
+    filename: "brave-browser-release-{{ ansible_distribution_release }}"
+    state: present
+    update_cache: yes
+  become: yes
+
+- name: Install Brave browser
+  apt:
+    name: "{{ chrome_package }}"
+    state: present
+  become: yes

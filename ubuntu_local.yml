@@ -57,6 +57,7 @@
     - { name: flatpaks, flatpaks: "{{ flatpak_list }}"}
     - kvm
     - vscode
+    - brave-browser
     - chrome
     - powershell_core
     - dotnet_core_sdk
