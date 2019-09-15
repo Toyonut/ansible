@@ -16,6 +16,6 @@
 
 - name: Install Brave browser
   apt:
-    name: "{{ chrome_package }}"
+    name: "{{ brave_package }}"
     state: present
   become: yes
