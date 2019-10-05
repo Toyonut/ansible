@@ -27,7 +27,6 @@
       - steam
       - remmina
       - ffmpeg
-      - solaar-gnome3
 
     snap_package_list:
       - { name: bitwarden, classic: False }
@@ -57,7 +56,6 @@
     - { name: flatpaks, flatpaks: "{{ flatpak_list }}"}
     - kvm
     - vscode
-    - brave-browser
     - chrome
     - powershell_core
     - dotnet_core_sdk
