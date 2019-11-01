@@ -1,4 +1,0 @@
----
-go_version: 1.12
-
-shell_rc_path: ~/.bashrc
