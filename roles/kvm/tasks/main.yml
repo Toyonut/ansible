@@ -4,12 +4,23 @@
   become: yes
   register: kvm_enabled
 
-- name: Install KVM pre-requisite packages
+- name: Ubuntu | Install KVM pre-requisite packages
   apt:
     name: "{{ kvm_packages }}"
     state: present
   become: yes
-  when: kvm_enabled.stdout > "0"
+  when:
+  - kvm_enabled.stdout > "0"
+  - ansible_distribution == 'Ubuntu'
+
+- name: Fedora | Install KVM pre-requisite packages
+  dnf:
+    name: "{{ kvm_packages }}"
+    state: present
+  become: yes
+  when:
+  - kvm_enabled.stdout > "0"
+  - ansible_distribution == 'Fedora'
 
 - name: Ensure libvirtd service enabled and started
   systemd:
