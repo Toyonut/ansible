@@ -10,6 +10,7 @@
     - ansible_distribution == 'Ubuntu'
     - ansible_distribution_version < "18.10"
   become: yes
+  register: flatpak_repo_installed
 
 - name: Install Flatpak pre-reqs
   apt:
@@ -17,6 +18,10 @@
     update-cache: Yes
     state: present
   become: yes
+  when:
+    - ansible_distribution == 'Ubuntu'
+    - flatpak_repo_installed.changed
+  register: flatpak_installed
 
 - name: Add Flatpak remote
   flatpak_remote:
@@ -24,6 +29,7 @@
     flatpakrepo_url: "{{ item.remote_url }}"
   with_items: "{{ flatpak_repos }}"
   become: yes
+  when: flatpak_installed.changed
 
 - name: Install Flatpak apps
   flatpak:
@@ -47,6 +53,7 @@
       [Install]
       WantedBy=timers.target
   become: yes
+  when: flatpak_installed.changed
 
 - name: Add Flatpak update systemd unit file
   blockinfile:
@@ -60,6 +67,7 @@
       Type=oneshot
       ExecStart=/usr/bin/flatpak update -y
   become: yes
+  when: flatpak_installed.changed
 
 - name: Set up Flatpak auto update systemd
   systemd:
@@ -68,3 +76,4 @@
     state: started
     daemon_reload: yes
   become: yes
+  when: flatpak_installed.changed
