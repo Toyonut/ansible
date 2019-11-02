@@ -1,23 +1,45 @@
 ---
-- name: check if packages-microsoft-prod.deb exists
-  stat:
-    path: /tmp/packages-microsoft-prod.deb
-  register: ms_package_exists
+- name: Ubuntu | Install dotnet core
+  block:
+  - name: check if packages-microsoft-prod.deb exists
+    stat:
+      path: /tmp/packages-microsoft-prod.deb
+    register: ms_package_exists
 
-- name: download
-  get_url:
-    url: "https://packages.microsoft.com/config/ubuntu/{{ ansible_distribution_version }}/packages-microsoft-prod.deb"
-    dest: /tmp/packages-microsoft-prod.deb
-  when: not ms_package_exists.stat.exists
+  - name: download
+    get_url:
+      url: "https://packages.microsoft.com/config/ubuntu/{{ ansible_distribution_version }}/packages-microsoft-prod.deb"
+      dest: /tmp/packages-microsoft-prod.deb
+    when: not ms_package_exists.stat.exists
 
-- name: install ms package
-  apt:
-    deb: /tmp/packages-microsoft-prod.deb
-  become: yes
+  - name: install ms package
+    apt:
+      deb: /tmp/packages-microsoft-prod.deb
+    become: yes
 
-- name: install dotnet packages and deps with apt
-  apt:
-    name: "{{ dotnet_packages }}"
-    state: latest
-    update_cache: yes
-  become: yes
+  - name: install dotnet packages and deps with apt
+    apt:
+      name: "{{ dotnet_packages }}"
+      state: latest
+      update_cache: yes
+    become: yes
+  when: ansible_distribution == 'Ubuntu'
+
+- name: Fedora | Install dotnet core
+  block:
+  - name: Add dotnet repo
+    yum_repository:
+      name: packages-microsoft-com-prod
+      description: Microsoft dotnet core repository
+      baseurl: "{{ fedora_dotnet_baseurl }}"
+      enabled: yes
+      gpgcheck: yes
+      gpgkey: "{{ fedora_dotnet_key_url }}"
+
+  - name: install dotnet core
+    dnf:
+      name: "{{ dotnet_sdk }}"
+      state: latest
+      update_cache: yes
+    become: yes
+  when: ansible_distribution == 'Fedora'
