@@ -1,9 +1,17 @@
 ---
-- name: install Snap if not installed
-  apt:
+- name: Ubuntu | Check Snap is installed
+  dnf:
     name: snapd
-    state: latest
+    state: present
   become: yes
+  when: ansible_distribution == 'Ubuntu'
+
+- name: Fedora | Check Snap is installed
+  yum:
+    name: snapd
+    state: present
+  become: yes
+  when: ansible_distribution == 'Fedora'
 
 - name: check Powershell installed
   shell: which pwsh
