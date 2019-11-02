@@ -4,11 +4,22 @@
   register: gnome_installed
   ignore_errors: yes
 
-- name: Install Gnome extensions apt
+- name: Ubuntu | Install Gnome extensions
   apt:
     name: "{{ extensions}}"
     state: present
   when:
+    - ansible_distribution == "Ubuntu"
+    - gnome_installed.stdout != ""
+    - extensions is defined
+  become: yes
+
+- name: Fedora | Install Gnome extensions
+  dnf:
+    name: "{{ extensions}}"
+    state: present
+  when:
+    - ansible_distribution == "Fedora"
     - gnome_installed.stdout != ""
     - extensions is defined
   become: yes
