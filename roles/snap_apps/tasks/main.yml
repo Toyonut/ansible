@@ -1,9 +1,17 @@
 ---
-- name: Check Snap is installed
+- name: Ubuntu | Check Snap is installed
   apt:
     name: snapd
     state: present
   become: yes
+  when: ansible_distribution == 'Ubuntu'
+
+- name: Fedora | Check Snap is installed
+  dnf:
+    name: snapd
+    state: present
+  become: yes
+  when: ansible_distribution == 'Fedora'
 
 - name: Install Snap packages
   snap:
