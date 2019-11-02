@@ -1,33 +1,66 @@
 ---
-- name: kill elementary appcenter
-  command: pkill -f io.elementary.appcenter
-  ignore_errors: yes
+- name: Ubuntu | Perform base system tasks
+  block:
+  - name: kill elementary appcenter
+    command: pkill -f io.elementary.appcenter
+    ignore_errors: yes
 
-- name: update and upgrade system packages
-  apt:
-    update_cache: yes
-    upgrade: full
-  become: yes
+  - name: update and upgrade system packages
+    apt:
+      update_cache: yes
+      upgrade: full
+    become: yes
 
-- name: install required packages
-  apt:
-    name: "{{ apt_packages }}"
-    state: latest
-    autoremove: yes
-  when: apt_packages is defined
-  become: yes
+  - name: install required packages
+    apt:
+      name: "{{ required_packages }}"
+      state: latest
+      autoremove: yes
+    when: required_packages is defined
+    become: yes
 
-- name: remove thunderbird
-  apt:
-    name: thunderbird
-    state: absent
-    purge: yes
-  become: yes
+  - name: remove thunderbird
+    apt:
+      name: thunderbird
+      state: absent
+      purge: yes
+    become: yes
 
-- name: Remove apt libreoffice
-  apt:
-    name: libreoffice*
-    state: absent
-    autoremove: yes
-    purge: yes
-  become: yes
+  - name: Remove libreoffice
+    apt:
+      name: libreoffice*
+      state: absent
+      autoremove: yes
+      purge: yes
+    become: yes
+  when: ansible_distribution == 'Ubuntu'
+
+- name: Fedora | Perform base system tasks
+  block:
+  - name: update and upgrade system packages
+    dnf:
+      update_cache: yes
+      upgrade: full
+    become: yes
+
+  - name: install required packages
+    dnf:
+      name: "{{ required_packages }}"
+      state: latest
+      autoremove: yes
+    when: required_packages is defined
+    become: yes
+
+  - name: remove thunderbird
+    dnf:
+      name: thunderbird
+      state: absent
+    become: yes
+
+  - name: Remove libreoffice
+    dnf:
+      name: libreoffice*
+      state: absent
+      autoremove: yes
+    become: yes
+  when: ansible_distribution == 'Fedora'
