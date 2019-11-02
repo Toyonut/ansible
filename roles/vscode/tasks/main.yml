@@ -1,31 +1,52 @@
 ---
-- name: Install dependencies
-  become: yes
-  apt:
-    name:
-      - ca-certificates
-      - apt-transport-https
-      - gconf2
-      - libasound2
-      - libgtk2.0-0
-      - libxss1
-    state: present
+- name: Ubuntu | Install
+  block:
+  - name: Install dependencies
+    apt:
+      name: "{{ ubuntu_dependencies }}"
+      state: present
+    become: yes
 
-- name: Install key
-  become: yes
-  apt_key:
-    url: 'https://packages.microsoft.com/keys/microsoft.asc'
-    state: present
+  - name: Install key
+    become: yes
+    apt_key:
+      url: 'https://packages.microsoft.com/keys/microsoft.asc'
+      state: present
 
-- name: Install VS Code repo
-  become: yes
-  apt_repository:
-    repo: deb [arch=amd64] https://packages.microsoft.com/repos/vscode stable main
-    filename: vscode
-    state: present
+  - name: Install VS Code repo
+    become: yes
+    apt_repository:
+      repo: deb [arch=amd64] https://packages.microsoft.com/repos/vscode stable main
+      filename: vscode
+      state: present
 
-- name: Install VS Code
-  become: yes
-  apt:
-    name: "code{{ (visual_studio_code_version != '') | ternary('=' + visual_studio_code_version, '') }}"
-    state: present
+  - name: Install VS Code
+    become: yes
+    apt:
+      name: "code{{ (visual_studio_code_version != '') | ternary('=' + visual_studio_code_version, '') }}"
+      state: present
+  when: ansible_distribution == 'Ubuntu'
+
+- name: Fedora | Install
+  block:
+  - name: Install dependencies
+    dnf:
+      name: "{{ fedora_dependencies }}"
+      state: present
+    become: yes
+
+  - name: Install VS Code repo
+    yum_repository:
+      name: Visual Studio Code
+      description: Visual Studio Code Repo
+      baseurl: https://packages.microsoft.com/yumrepos/vscode
+      enabled: yes
+      gpgcheck: yes
+      gpgkey: https://packages.microsoft.com/keys/microsoft.asc
+
+  - name: Install VS Code
+    become: yes
+    dnf:
+      name: "code{{ (visual_studio_code_version != '') | ternary('=' + visual_studio_code_version, '') }}"
+      state: present
+  when: ansible_distribution == 'Fedora'

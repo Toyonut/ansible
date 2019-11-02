@@ -1,3 +1,14 @@
 ---
 # Visual Studio Code version number (defaults to the latest version)
 visual_studio_code_version: ''
+
+fedora_dependencies:
+  - ca-certificates
+
+ubuntu_dependencies:
+  - ca-certificates
+  - apt-transport-https
+  - gconf2
+  - libasound2
+  - libgtk2.0-0
+  - libxss1
