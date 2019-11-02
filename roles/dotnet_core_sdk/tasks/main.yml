@@ -35,6 +35,7 @@
       enabled: yes
       gpgcheck: yes
       gpgkey: "{{ fedora_dotnet_key_url }}"
+    become: yes
 
   - name: install dotnet core
     dnf:
