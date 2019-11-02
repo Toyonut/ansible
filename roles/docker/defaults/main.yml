@@ -1,3 +1,9 @@
 docker_packages:
   - docker-ce
+  - docker-ce-cli
+  - containerd.io
   - docker-compose
+
+# fedora
+fedora_docker_baseurl: "https://download.docker.com/linux/fedora/$releasever/$basearch/stable"
+fedora_docker_key_url: "https://download.docker.com/linux/fedora/gpg"
