@@ -1,9 +1,17 @@
 ---
-- name: Install dependencies
+- name: Ubuntu | Install dependencies
   apt:
     name: "{{ dependencies_packages }}"
     state: present
   become: yes
+  when: ansible_distribution == 'Ubuntu'
+
+- name: Fedora | Install dependencies
+  dnf:
+    name: "{{ dependencies_packages }}"
+    state: present
+  become: yes
+  when: ansible_distribution == 'Fedora'
 
 - name: Fetch repo for n
   git:
