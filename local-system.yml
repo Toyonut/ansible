@@ -52,7 +52,12 @@
       - { name: heroku, classic: True }
       - { name: intellij-idea-community, classic: True }
 
-    gnome_extensions_list:
+    fedora_gnome_extensions_list:
+      - gnome-shell-extension-appindicator
+      - gnome-tweak-tool
+    
+    ubuntu_gnome_extensions_list:
+      - gnome-shell-extension-dashtodock
       - gnome-shell-extension-appindicator
       - gnome-tweak-tool
 
@@ -68,7 +73,8 @@
   roles:
     - { name: base_system_tasks, required_packages: "{{ apt_package_list }}", when: ansible_distribution == "Ubuntu" }
     - { name: base_system_tasks, required_packages: "{{ yum_package_list }}", when: ansible_distribution == "Fedora" }
-    - { name: gnome_extensions, extensions: "{{ gnome_extensions_list }}" }
+    - { name: gnome_extensions, extensions: "{{ ubuntu_gnome_extensions_list }}",  when: ansible_distribution == "Ubuntu" }
+    - { name: gnome_extensions, extensions: "{{ fedora_gnome_extensions_list }}",  when: ansible_distribution == "Fedora" }
     - { name: snap_apps, snap_packages: "{{ snap_package_list }}" }
     - { name: flatpaks, flatpaks: "{{ flatpak_list }}"}
     - kvm
