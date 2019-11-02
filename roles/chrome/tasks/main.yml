@@ -1,20 +1,40 @@
 ---
-- name: Ensure Google linux signing key present
-  apt_key:
-    url: https://dl-ssl.google.com/linux/linux_signing_key.pub
-    state: present
-  become: yes
+- name: Ubuntu | Install Chrome
+  block:
+  - name: Ensure Google linux signing key present
+    apt_key:
+      url: https://dl-ssl.google.com/linux/linux_signing_key.pub
+      state: present
+    become: yes
 
-- name: Ensure Google chrome repo present
-  apt_repository:
-    repo: "deb [arch=amd64] http://dl.google.com/linux/chrome/deb/ stable main"
-    filename: "google-chrome"
-    state: present
-    update_cache: yes
-  become: yes
+  - name: Ensure Google chrome repo present
+    apt_repository:
+      repo: "deb [arch=amd64] http://dl.google.com/linux/chrome/deb/ stable main"
+      filename: "google-chrome"
+      state: present
+      update_cache: yes
+    become: yes
 
-- name: Install Google Chrome
-  apt:
-    name: "{{ chrome_package }}"
-    state: present
-  become: yes
+  - name: Install Google Chrome
+    apt:
+      name: "{{ chrome_package }}"
+      state: present
+    become: yes
+  when: ansible_distribution == 'Ubuntu'
+
+- name: Fedora | Install Chrome
+  block:
+  - name: Ensure Google linux signing key present
+    yum_repository:
+      name: google-chrome
+      baseurl: "{{ fedora_chrome_baseurl }}"
+      enabled: yes
+      gpgcheck: yes
+      gpgkey: "{{ fedora_chrome_key_url }}"
+
+  - name: Install Google Chrome
+    dnf:
+      name: "{{ chrome_package }}"
+      state: present
+    become: yes
+  when: ansible_distribution == 'Fedora'
