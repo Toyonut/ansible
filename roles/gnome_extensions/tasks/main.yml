@@ -3,6 +3,13 @@
   shell: "dpkg --get-selections | grep gnome-shell"
   register: gnome_installed
   ignore_errors: yes
+  when: ansible_distribution == "Ubuntu"
+
+- name: Check Gnome is installed
+  shell: "dnf search gnome-shell | grep gnome-shell"
+  register: gnome_installed
+  ignore_errors: yes
+  when: ansible_distribution == "Fedora"
 
 - name: Ubuntu | Install Gnome extensions
   apt:
