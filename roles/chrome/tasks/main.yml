@@ -27,10 +27,12 @@
   - name: Ensure Google linux signing key present
     yum_repository:
       name: google-chrome
+      description: "Google Chrome"
       baseurl: "{{ fedora_chrome_baseurl }}"
       enabled: yes
       gpgcheck: yes
       gpgkey: "{{ fedora_chrome_key_url }}"
+    become: yes
 
   - name: Install Google Chrome
     dnf:

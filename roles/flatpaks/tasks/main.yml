@@ -29,7 +29,6 @@
     flatpakrepo_url: "{{ item.remote_url }}"
   with_items: "{{ flatpak_repos }}"
   become: yes
-  when: flatpak_installed.changed
 
 - name: Install Flatpak apps
   flatpak:

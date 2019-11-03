@@ -37,17 +37,10 @@
 
 - name: Fedora | Perform base system tasks
   block:
-  - name: update and upgrade system packages
-    dnf:
-      update_cache: yes
-      upgrade: full
-    become: yes
-
   - name: install required packages
     dnf:
       name: "{{ required_packages }}"
       state: latest
-      autoremove: yes
     when: required_packages is defined
     become: yes
 
