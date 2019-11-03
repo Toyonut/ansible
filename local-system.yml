@@ -41,7 +41,6 @@
       - keepassxc
       - tilix
       - tlp
-      - python3
       - transmission
       - remmina
 
@@ -55,7 +54,7 @@
     fedora_gnome_extensions_list:
       - gnome-shell-extension-appindicator
       - gnome-tweak-tool
-    
+
     ubuntu_gnome_extensions_list:
       - gnome-shell-extension-dashtodock
       - gnome-shell-extension-appindicator
