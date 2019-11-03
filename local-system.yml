@@ -27,6 +27,8 @@
       - steam
       - remmina
       - ffmpeg
+      - exfat-fuse
+      - exfat-utils
 
     yum_package_list:
       - git
@@ -43,6 +45,8 @@
       - tlp
       - transmission
       - remmina
+      - fuse-exfat
+      - exfat-utils
 
     snap_package_list:
       - { name: bitwarden, classic: False }
