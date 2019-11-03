@@ -30,3 +30,11 @@
     daemon_reload: yes
   become: yes
   when: kvm_enabled.stdout > "0"
+
+- name: Add existing user '{{ ansible_user_id }}' to virt groups
+  user:
+    name: '{{ ansible_user_id }}'
+    groups: "{{ item }}"
+    append: yes
+  loop: "{{ groups }}"
+  become: yes

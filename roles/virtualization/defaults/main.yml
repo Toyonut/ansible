@@ -6,7 +6,9 @@ kvm_packages:
   - qemu-kvm
   - bridge-utils
   - virt-manager
+  - gnome-boxes
 
 groups:
   - libvirt
   - libvirt-qemu
+  - kvm
