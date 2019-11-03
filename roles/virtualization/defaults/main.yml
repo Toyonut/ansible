@@ -8,7 +8,7 @@ kvm_packages:
   - virt-manager
   - gnome-boxes
 
-groups:
+virt_groups:
   - libvirt
   - libvirt-qemu
   - kvm

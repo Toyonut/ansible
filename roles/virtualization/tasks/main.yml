@@ -36,5 +36,5 @@
     name: '{{ ansible_user_id }}'
     groups: "{{ item }}"
     append: yes
-  loop: "{{ groups }}"
+  loop: "{{ virt_groups }}"
   become: yes
