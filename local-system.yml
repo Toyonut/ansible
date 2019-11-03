@@ -80,7 +80,7 @@
     - { name: gnome_extensions, extensions: "{{ fedora_gnome_extensions_list }}",  when: ansible_distribution == "Fedora" }
     - { name: snap_apps, snap_packages: "{{ snap_package_list }}" }
     - { name: flatpaks, flatpaks: "{{ flatpak_list }}"}
-    - kvm
+    - virtualization
     - vscode
     - chrome
     - powershell_core
