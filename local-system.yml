@@ -27,6 +27,7 @@
       - steam
       - remmina
       - ffmpeg
+      - gnome-boxes
 
     yum_package_list:
       - git
