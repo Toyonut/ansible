@@ -1,8 +1,15 @@
 ---
 - name: Check Gnome is installed
   shell: "dpkg --get-selections | grep gnome-shell"
-  register: gnome_installed
+  register: gnome_installed_ubuntu
   ignore_errors: yes
+  when: ansible_distribution == "Ubuntu"
+
+- name: Check Gnome is installed
+  shell: "dnf search gnome-shell | grep gnome-shell"
+  register: gnome_installed_fedora
+  ignore_errors: yes
+  when: ansible_distribution == "Fedora"
 
 - name: Ubuntu | Install Gnome extensions
   apt:
@@ -10,7 +17,7 @@
     state: present
   when:
     - ansible_distribution == "Ubuntu"
-    - gnome_installed.stdout != ""
+    - gnome_installed_ubuntu.stdout != ""
     - extensions is defined
   become: yes
 
@@ -20,6 +27,6 @@
     state: present
   when:
     - ansible_distribution == "Fedora"
-    - gnome_installed.stdout != ""
+    - gnome_installed_fedora.stdout != ""
     - extensions is defined
   become: yes
