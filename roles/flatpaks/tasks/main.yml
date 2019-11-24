@@ -37,42 +37,17 @@
   with_items: "{{ flatpaks }}"
   become: yes
 
-- name: Add Flatpak update systemd timer
-  blockinfile:
-    path: /etc/systemd/system/flatpak-update.timer
-    create: yes
-    block: |
-      [Unit]
-      Description=Flatpak update
-
-      [Timer]
-      OnCalendar=20:00
-      Persistent=true
-
-      [Install]
-      WantedBy=timers.target
-  become: yes
+- name: Get Flatpak location
+  command: which flatpak
   when: flatpak_installed.changed
+  register: flatpak_location
 
-- name: Add Flatpak update systemd unit file
-  blockinfile:
-    path: /etc/systemd/system/flatpak-update.service
-    create: yes
-    block: |
-      [Unit]
-      Description=Flatpak update
-
-      [Service]
-      Type=oneshot
-      ExecStart=/usr/bin/flatpak update -y
-  become: yes
+- name: Set Flatpak Cron update schedule
+  cron:
+    name: "Update Flatpaks"
+    user: "root"
+    special_time: daily
+    job: "{{ flatpak_location.stdout }} update -y"
   when: flatpak_installed.changed
-
-- name: Set up Flatpak auto update systemd
-  systemd:
-    name: flatpak-update.timer
-    enabled: yes
-    state: started
-    daemon_reload: yes
   become: yes
-  when: flatpak_installed.changed
+
