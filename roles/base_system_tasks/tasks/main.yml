@@ -55,7 +55,7 @@
     become: yes
 
   - name: Remove libreoffice
-    dnf:
+    rpm:
       name: libreoffice*
       state: absent
       autoremove: yes
