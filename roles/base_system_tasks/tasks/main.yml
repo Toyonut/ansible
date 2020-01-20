@@ -37,18 +37,19 @@
 
 - name: Fedora | Perform base system tasks
   block:
-  - name: install rpmfusion repos
-    command: "dnf install https://download1.rpmfusion.org/free/fedora/rpmfusion-free-release-$(rpm -E %fedora).noarch.rpm https://download1.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-$(rpm -E %fedora).noarch.rpm -y"
-    become: yes
+  - name: Install rpmfusion repos
+    dnf:
+      name: "{{ rpm_fusion_repos }}"
+      state: present
 
-  - name: install required packages
+  - name: Install required packages
     dnf:
       name: "{{ required_packages }}"
       state: latest
     when: required_packages is defined
     become: yes
 
-  - name: remove thunderbird
+  - name: Remove thunderbird
     dnf:
       name: thunderbird
       state: absent
