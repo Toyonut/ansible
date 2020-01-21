@@ -12,7 +12,7 @@ virt_groups_fedora:
   - libvirt
   - kvm
 
-  virt_groups_ubuntu:
+virt_groups_ubuntu:
   - libvirt
   - libvirt-qemu
   - kvm
