@@ -41,6 +41,7 @@
     dnf:
       name: "{{ rpm_fusion_repos }}"
       state: present
+    become: yes
 
   - name: Install required packages
     dnf:
