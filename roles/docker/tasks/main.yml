@@ -50,6 +50,14 @@
       update_cache: yes
     become: yes
 
+  - name: Enable docker service
+    systemd:
+      name: docker
+      enabled: yes
+      masked: no
+      state: reloaded
+    become: yes
+
   - name: Add existing user '{{ ansible_user_id }}' to group docker
     user:
       name: '{{ ansible_user_id }}'
