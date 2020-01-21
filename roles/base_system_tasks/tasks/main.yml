@@ -57,9 +57,10 @@
     become: yes
 
   - name: Remove libreoffice
-    rpm:
+    dnf:
       name: libreoffice*
       state: absent
       autoremove: yes
     become: yes
+    ignore_errors: yes
   when: ansible_distribution == 'Fedora'
