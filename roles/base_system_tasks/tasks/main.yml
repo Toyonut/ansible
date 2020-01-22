@@ -63,4 +63,23 @@
       autoremove: yes
     become: yes
     ignore_errors: yes
+
+  - name: Check if PostgreSQL database is initialized.
+    stat:
+      path: "{{ postgresql_data_dir }}/PG_VERSION"
+    register: pgdata_dir_version
+
+  - name: Ensure PostgreSQL database is initialized.
+    command: "/usr/bin/postgresql-setup --initdb"
+    when: not pgdata_dir_version.stat.exists
+    become: true
+
+  - name: Enable postgresql service
+    systemd:
+      name: postgresql
+      enabled: yes
+      masked: no
+      state: reloaded
+    become: yes
+
   when: ansible_distribution == 'Fedora'
