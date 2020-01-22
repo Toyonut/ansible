@@ -68,6 +68,7 @@
     stat:
       path: "{{ postgresql_data_dir }}/PG_VERSION"
     register: pgdata_dir_version
+    become: true
 
   - name: Ensure PostgreSQL database is initialized.
     command: "/usr/bin/postgresql-setup --initdb"
