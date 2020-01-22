@@ -43,8 +43,11 @@
       - keepassxc
       - tilix
       - tlp
+      - powerline-fonts
       - transmission
+      - steam
       - remmina
+      - ffmpeg
       - fuse-exfat
       - exfat-utils
 
