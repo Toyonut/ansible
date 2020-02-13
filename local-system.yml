@@ -57,6 +57,7 @@
       - { name: sublime-text, classic: True }
       - { name: heroku, classic: True }
       - { name: intellij-idea-community, classic: True }
+      - { name: code, classic: True }
 
     fedora_gnome_extensions_list:
       - gnome-shell-extension-appindicator
@@ -84,7 +85,6 @@
     - { name: snap_apps, snap_packages: "{{ snap_package_list }}" }
     - { name: flatpaks, flatpaks: "{{ flatpak_list }}"}
     - virtualization
-    - vscode
     - chrome
     - powershell_core
     - dotnet_core_sdk
