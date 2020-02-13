@@ -1,0 +1,47 @@
+---
+
+- name: Install rpmfusion repos
+  dnf:
+    name: "{{ rpm_fusion_repos }}"
+    state: present
+  become: yes
+
+- name: Install required packages
+  dnf:
+    name: "{{ required_packages }}"
+    state: latest
+  when: required_packages is defined
+  become: yes
+
+- name: Remove thunderbird
+  dnf:
+    name: thunderbird
+    state: absent
+  become: yes
+
+- name: Remove libreoffice
+  dnf:
+    name: libreoffice*
+    state: absent
+    autoremove: yes
+  become: yes
+  ignore_errors: yes
+
+- name: Check if PostgreSQL database is initialized.
+  stat:
+    path: "{{ postgresql_data_dir }}/PG_VERSION"
+  register: pgdata_dir_version
+  become: true
+
+- name: Ensure PostgreSQL database is initialized.
+  command: "/usr/bin/postgresql-setup --initdb"
+  when: not pgdata_dir_version.stat.exists
+  become: true
+
+- name: Enable postgresql service
+  systemd:
+    name: postgresql
+    enabled: yes
+    masked: no
+    state: reloaded
+  become: yes

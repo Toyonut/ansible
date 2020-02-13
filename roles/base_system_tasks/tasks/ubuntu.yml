@@ -1,0 +1,32 @@
+- name: kill elementary appcenter
+  command: pkill -f io.elementary.appcenter
+  ignore_errors: yes
+
+- name: update and upgrade system packages
+  apt:
+    update_cache: yes
+    upgrade: full
+  become: yes
+
+- name: install required packages
+  apt:
+    name: "{{ required_packages }}"
+    state: latest
+    autoremove: yes
+  when: required_packages is defined
+  become: yes
+
+- name: remove thunderbird
+  apt:
+    name: thunderbird
+    state: absent
+    purge: yes
+  become: yes
+
+- name: Remove libreoffice
+  apt:
+    name: libreoffice*
+    state: absent
+    autoremove: yes
+    purge: yes
+  become: yes
