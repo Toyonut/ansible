@@ -1,0 +1,58 @@
+---
+- name: Set up a local machine
+  connection: local
+  hosts: 127.0.0.1
+  vars:
+    yum_package_list:
+      - git
+      - geary
+      - cheese
+      - curl
+      - ca-certificates
+      - postgresql
+      - postgresql-server
+      - zsh
+      - vim
+      - keepassxc
+      - tilix
+      - tlp
+      - powerline-fonts
+      - transmission
+      - steam
+      - remmina
+      - ffmpeg
+      - fuse-exfat
+      - exfat-utils
+
+    snap_package_list:
+      - { name: bitwarden, classic: False }
+      - { name: pycharm-community, classic: True }
+      - { name: sublime-text, classic: True }
+      - { name: heroku, classic: True }
+      - { name: intellij-idea-community, classic: True }
+      - { name: code, classic: True }
+
+    fedora_gnome_extensions_list:
+      - gnome-shell-extension-appindicator
+      - gnome-tweak-tool
+
+    flatpak_list:
+      - { name: us.zoom.Zoom, remote: flathub}
+      - { name: org.gnome.meld, remote: flathub}
+      - { name: net.bartkessels.getit, remote: flathub }
+      - { name: org.libreoffice.LibreOffice, remote: flathub }
+      - { name: com.spotify.Client, remote: flathub }
+      - { name: com.slack.Slack, remote: flathub }
+      - { name: org.openttd.OpenTTD, remote: flathub }
+
+  roles:
+    - { name: base_system_tasks, required_packages: "{{ yum_package_list }}" }
+    - { name: gnome_extensions, extensions: "{{ fedora_gnome_extensions_list }}" }
+    - { name: snap_apps, snap_packages: "{{ snap_package_list }}" }
+    - { name: flatpaks, flatpaks: "{{ flatpak_list }}"}
+    - virtualization
+    - chrome
+    - powershell_core
+    - dotnet_core_sdk
+    - docker
+    - node

@@ -30,27 +30,6 @@
       - exfat-fuse
       - exfat-utils
 
-    yum_package_list:
-      - git
-      - geary
-      - cheese
-      - curl
-      - ca-certificates
-      - postgresql
-      - postgresql-server
-      - zsh
-      - vim
-      - keepassxc
-      - tilix
-      - tlp
-      - powerline-fonts
-      - transmission
-      - steam
-      - remmina
-      - ffmpeg
-      - fuse-exfat
-      - exfat-utils
-
     snap_package_list:
       - { name: bitwarden, classic: False }
       - { name: pycharm-community, classic: True }
@@ -58,10 +37,6 @@
       - { name: heroku, classic: True }
       - { name: intellij-idea-community, classic: True }
       - { name: code, classic: True }
-
-    fedora_gnome_extensions_list:
-      - gnome-shell-extension-appindicator
-      - gnome-tweak-tool
 
     ubuntu_gnome_extensions_list:
       - gnome-shell-extension-dashtodock
@@ -78,10 +53,8 @@
       - { name: org.openttd.OpenTTD, remote: flathub }
 
   roles:
-    - { name: base_system_tasks, required_packages: "{{ apt_package_list }}", when: ansible_distribution == "Ubuntu" }
-    - { name: base_system_tasks, required_packages: "{{ yum_package_list }}", when: ansible_distribution == "Fedora" }
-    - { name: gnome_extensions, extensions: "{{ ubuntu_gnome_extensions_list }}",  when: ansible_distribution == "Ubuntu" }
-    - { name: gnome_extensions, extensions: "{{ fedora_gnome_extensions_list }}",  when: ansible_distribution == "Fedora" }
+    - { name: base_system_tasks, required_packages: "{{ apt_package_list }}" }
+    - { name: gnome_extensions, extensions: "{{ ubuntu_gnome_extensions_list }}" }
     - { name: snap_apps, snap_packages: "{{ snap_package_list }}" }
     - { name: flatpaks, flatpaks: "{{ flatpak_list }}"}
     - virtualization
