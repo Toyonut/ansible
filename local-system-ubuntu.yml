@@ -52,14 +52,6 @@
       - { name: com.slack.Slack, remote: flathub }
       - { name: org.openttd.OpenTTD, remote: flathub }
 
-  pre_tasks:
-    # Some distros overwrite the ubuntu defaults and break all the things. Looking at you Mint and Elementary...
-    - set_fact:
-        ansible_distribution: "Ubuntu"
-        ansible_distribution_version: "18.04"
-        ansible_distribution_release: "bionic"
-      when: ubuntu_like == true | bool
-
   roles:
     - { name: base_system_tasks, required_packages: "{{ apt_package_list }}" }
     - { name: gnome_extensions, extensions: "{{ ubuntu_gnome_extensions_list }}" }
