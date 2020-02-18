@@ -22,5 +22,5 @@ export PATH=$PATH:$HOME/.local/bin/
 ### Run Ansible
 
 ``` bash
-ansible-playbook -K local-system.yml
+ansible-playbook -K local-system-<systemtype>.yml
 ```
