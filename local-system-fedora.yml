@@ -5,7 +5,6 @@
   vars:
     yum_package_list:
       - git
-      - geary
       - cheese
       - curl
       - ca-certificates
@@ -44,6 +43,7 @@
       - { name: com.spotify.Client, remote: flathub }
       - { name: com.slack.Slack, remote: flathub }
       - { name: org.openttd.OpenTTD, remote: flathub }
+      - { name: org.gnome.Geary, remote: flathub }
 
   roles:
     - { name: base_system_tasks, required_packages: "{{ yum_package_list }}" }

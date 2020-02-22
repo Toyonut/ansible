@@ -5,7 +5,6 @@
   vars:
     apt_package_list:
       - git
-      - geary
       - build-essential
       - cheese
       - curl
@@ -51,6 +50,7 @@
       - { name: com.spotify.Client, remote: flathub }
       - { name: com.slack.Slack, remote: flathub }
       - { name: org.openttd.OpenTTD, remote: flathub }
+      - { name: org.gnome.Geary, remote: flathub }
 
   roles:
     - { name: base_system_tasks, required_packages: "{{ apt_package_list }}" }
