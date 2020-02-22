@@ -16,11 +16,12 @@
   when: required_packages is defined
   become: yes
 
-- name: remove thunderbird
+- name: remove apt email apps
   apt:
-    name: thunderbird
+    name: {{ email_packages }}
     state: absent
     purge: yes
+    autoremove: yes
   become: yes
 
 - name: Remove libreoffice

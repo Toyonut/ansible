@@ -13,9 +13,9 @@
   when: required_packages is defined
   become: yes
 
-- name: Remove thunderbird
+- name: remove yum email apps
   dnf:
-    name: thunderbird
+    name: {{ email_packages }}
     state: absent
   become: yes
 
