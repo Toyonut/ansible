@@ -6,7 +6,6 @@ kvm_packages:
   - qemu-kvm
   - bridge-utils
   - virt-manager
-  - gnome-boxes
 
 virt_groups_fedora:
   - libvirt

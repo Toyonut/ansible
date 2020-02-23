@@ -44,6 +44,7 @@
       - { name: com.slack.Slack, remote: flathub }
       - { name: org.openttd.OpenTTD, remote: flathub }
       - { name: org.gnome.Geary, remote: flathub }
+      - { name: org.gnome.Boxes, remote: flathub }
 
   roles:
     - { name: base_system_tasks, required_packages: "{{ yum_package_list }}" }
