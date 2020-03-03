@@ -16,6 +16,14 @@
   when: required_packages is defined
   become: yes
 
+- name: ensure iio-sensor-proxy removed
+  apt:
+    name: iio-sensor-proxy
+    state: absent
+    autoremove: yes
+  become: yes
+  when: ansible_distribution_version == "19.10"
+
 - name: remove apt email apps
   apt:
     name: {{ email_packages }}
