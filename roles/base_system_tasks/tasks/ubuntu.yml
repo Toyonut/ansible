@@ -21,6 +21,7 @@
     name: iio-sensor-proxy
     state: absent
     autoremove: yes
+    purge: yes
   become: yes
   when: ansible_distribution_version == "19.10"
 
