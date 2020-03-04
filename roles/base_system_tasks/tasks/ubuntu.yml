@@ -27,7 +27,7 @@
 
 - name: remove apt email apps
   apt:
-    name: {{ email_packages }}
+    name: "{{ email_packages }}"
     state: absent
     purge: yes
     autoremove: yes

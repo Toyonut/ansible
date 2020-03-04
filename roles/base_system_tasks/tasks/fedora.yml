@@ -15,7 +15,7 @@
 
 - name: remove yum email apps
   dnf:
-    name: {{ email_packages }}
+    name: "{{ email_packages }}"
     state: absent
   become: yes
 
