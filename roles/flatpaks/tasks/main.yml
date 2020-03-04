@@ -10,7 +10,6 @@
     - ansible_distribution == 'Ubuntu'
     - ansible_distribution_version < "18.10"
   become: yes
-  register: flatpak_repo_installed
 
 - name: Install Flatpak pre-reqs
   apt:
@@ -20,7 +19,6 @@
   become: yes
   when:
     - ansible_distribution == 'Ubuntu'
-    - flatpak_repo_installed.changed
   register: flatpak_installed
 
 - name: Add Flatpak remote
