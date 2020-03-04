@@ -11,20 +11,18 @@
 
 - name: Ubuntu | Install Gnome extensions
   apt:
-    name: "{{ extensions}}"
+    name: "{{ (ansible_distribution_version == '19.10') | ternary(ubuntu_eoan_gnome_extensions, ubuntu_gnome_extensions) }}"
     state: present
   when:
     - ansible_distribution == "Ubuntu"
     - gnome_installed
-    - extensions is defined
   become: yes
 
 - name: Fedora | Install Gnome extensions
   dnf:
-    name: "{{ extensions}}"
+    name: "{{ fedora_gnome_extensions}}"
     state: present
   when:
     - ansible_distribution == "Fedora"
     - gnome_installed
-    - extensions is defined
   become: yes
