@@ -1,67 +1,22 @@
 ---
-- name: Ubuntu | Install Docker
-  block:
-  - name: get docker gpg key
-    get_url:
-      url: https://download.docker.com/linux/ubuntu/gpg
-      dest: /tmp/docker_gpg
 
-  - name: install docker gpg key
-    command: apt-key add /tmp/docker_gpg
-    become: yes
+- include: fedora.yml
+  when: ansible_pkg_mgr == "yum"
 
-  - name: add docker repo
-    apt_repository:
-      repo: "deb [arch=amd64] https://download.docker.com/linux/ubuntu {{ ansible_distribution_release }} stable"
-      state: present
-    become: yes
+- include: ubuntu.yml
+  when: ansible_pkg_mgr == "apt"
 
-  - name: install required packages
-    apt:
-      name: "{{ docker_packages }}"
-      state: latest
-      update_cache: yes
-    become: yes
+- name: adding existing user '{{ ansible_user_id }}' to group docker
+  user:
+    name: '{{ ansible_user_id }}'
+    groups: docker
+    append: yes
+  become: yes
 
-  - name: adding existing user '{{ ansible_user_id }}' to group docker
-    user:
-      name: '{{ ansible_user_id }}'
-      groups: docker
-      append: yes
-    become: yes
-  when: ansible_distribution == 'Ubuntu'
-
-- name: Fedora | Install Docker
-  block:
-  - name: Add docker repo
-    yum_repository:
-      name: docker
-      description: Docker CE stable repo
-      baseurl: "{{ fedora_docker_baseurl }}"
-      enabled: yes
-      gpgcheck: yes
-      gpgkey: "{{ fedora_docker_key_url }}"
-    become: yes
-
-  - name: Install required packages
-    dnf:
-      name: "{{ docker_packages }}"
-      state: latest
-      update_cache: yes
-    become: yes
-
-  - name: Enable docker service
-    systemd:
-      name: docker
-      enabled: yes
-      masked: no
-      state: reloaded
-    become: yes
-
-  - name: Add existing user '{{ ansible_user_id }}' to group docker
-    user:
-      name: '{{ ansible_user_id }}'
-      groups: docker
-      append: yes
-    become: yes
-  when: ansible_distribution == 'Fedora'
+- name: Enable docker service
+  systemd:
+    name: docker
+    enabled: yes
+    masked: no
+    state: reloaded
+  become: yes

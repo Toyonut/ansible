@@ -1,0 +1,18 @@
+---
+
+- name: Add docker repo
+  yum_repository:
+    name: docker
+    description: Docker CE stable repo
+    baseurl: "{{ fedora_docker_baseurl }}"
+    enabled: yes
+    gpgcheck: yes
+    gpgkey: "{{ fedora_docker_key_url }}"
+  become: yes
+
+- name: Install required packages
+  dnf:
+    name: "{{ docker_packages }}"
+    state: latest
+    update_cache: yes
+  become: yes
