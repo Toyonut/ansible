@@ -42,14 +42,6 @@
   with_items: "{{ snap_packages }}"
   become: yes
 
-- name: Get Snap location
-  command: which snap
-  register: snap_location
-
-- name: Set Snap Cron update schedule
-  cron:
-    name: "Update snaps"
-    user: "root"
-    special_time: daily
-    job: "{{ snap_location.stdout }} refresh"
+- name: Set Snap update schedule
+  command: "snap set system refresh.timer=4:00-7:00,19:00-22:10"
   become: yes
