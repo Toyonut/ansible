@@ -28,6 +28,7 @@
       - ffmpeg
       - exfat-fuse
       - exfat-utils
+      - sqlitebrowser
 
     snap_package_list:
       - { name: bitwarden, classic: False }
