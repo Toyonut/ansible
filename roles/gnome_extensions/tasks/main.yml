@@ -7,7 +7,7 @@
 - name: Check Gnome is installed
   set_fact:
     gnome_installed: true
-  when: lookup('env','GDMSESSION') in ['gnome-shell', 'pop']
+  when: lookup('env','GDMSESSION') in ['gnome-shell', 'pop', 'ubuntu']
 
 - name: Ubuntu | Install Gnome extensions
   apt:
