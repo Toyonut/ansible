@@ -11,7 +11,7 @@
 
 - name: Ubuntu | Install Gnome extensions
   apt:
-    name: "{{ (ansible_distribution_version == '19.10') | ternary(ubuntu_eoan_gnome_extensions, ubuntu_gnome_extensions) }}"
+    name: "{{ ubuntu_gnome_extensions }}"
     state: present
   when:
     - ansible_distribution == "Ubuntu"

@@ -5,11 +5,6 @@ fedora_gnome_extensions:
   - gnome-tweak-tool
 
 ubuntu_gnome_extensions:
-  - gnome-shell-extension-dashtodock
-  - gnome-shell-extension-appindicator
-  - gnome-tweak-tool
-
-ubuntu_eoan_gnome_extensions:
   - gnome-shell-extension-ubuntu-dock
   - gnome-shell-extension-appindicator
   - gnome-tweak-tool
