@@ -4,7 +4,7 @@
     name: snapd
     state: present
   become: yes
-  when: ansible_distribution == 'Ubuntu'
+  when: ansible_distribution in ['Ubuntu', 'Pop!_OS']
 
 - name: Fedora | Check Snap is installed
   dnf:

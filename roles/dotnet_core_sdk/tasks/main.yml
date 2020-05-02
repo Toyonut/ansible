@@ -23,7 +23,7 @@
       state: latest
       update_cache: yes
     become: yes
-  when: ansible_distribution == 'Ubuntu'
+  when: ansible_distribution in ["Ubuntu", "Pop!_OS"]
 
 - name: Fedora | Install dotnet core
   block:

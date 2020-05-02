@@ -7,7 +7,7 @@
     update_cache: yes
   when:
     - flatpak_install_ppa
-    - ansible_distribution == 'Ubuntu'
+    - ansible_distribution in ["Ubuntu", "Pop!_OS"]
     - ansible_distribution_version < "18.10"
   become: yes
 
@@ -18,7 +18,7 @@
     state: present
   become: yes
   when:
-    - ansible_distribution == 'Ubuntu'
+    - ansible_distribution in ["Ubuntu", "Pop!_OS"]
   register: flatpak_installed
 
 - name: Add Flatpak remote

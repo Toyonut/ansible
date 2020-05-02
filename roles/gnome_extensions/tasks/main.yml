@@ -14,7 +14,7 @@
     name: "{{ ubuntu_gnome_extensions }}"
     state: present
   when:
-    - ansible_distribution == "Ubuntu"
+    - ansible_distribution in ["Ubuntu", "Pop!_OS"]
     - gnome_installed
   become: yes
 
