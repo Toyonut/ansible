@@ -2,6 +2,10 @@
 - name: Set up a local machine
   connection: local
   hosts: 127.0.0.1
+  pre_tasks:
+    - name: Use manual install of dotnet
+      set_fact:
+        manual_dotnet_install: no
   vars:
     yum_package_list:
       - git

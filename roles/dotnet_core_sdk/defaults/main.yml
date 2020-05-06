@@ -7,3 +7,11 @@ dotnet_packages:
 # Fedora
 fedora_dotnet_baseurl: "https://packages.microsoft.com/fedora/30/prod/"
 fedora_dotnet_key_url: "https://packages.microsoft.com/keys/microsoft.asc"
+
+# Manual install for if packages aren't available
+manual_dotnet_install: no
+dotnet_binary_package_name: "dotnet-sdk-3.1.201-linux-x64.tar.gz"
+dotnet_manual_download_link: "https://download.visualstudio.microsoft.com/download/pr/f65a8eb0-4537-4e69-8ff3-1a80a80d9341/cc0ca9ff8b9634f3d9780ec5915c1c66/{{ dotnet_binary_package_name }}"
+dotnet_package_checksum: "934bf29734776331691a4724f2174c4e9d2d1dde160f18397fd01abf0f96f2ec1bdd2874db9f0e25dce6993d527ea9c19031a0e67383fd813dcfcb9552ea0c70"
+dotnet_manual_install_directory: "/home/{{ ansible_user_id }}/dotnet"
+expected_dotnet_path: "/home/{{ ansible_user_id }}/dotnet/dotnet"
