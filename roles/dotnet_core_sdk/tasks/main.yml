@@ -1,11 +1,12 @@
 ---
-- name: Manual dotnet install
-  block:
+
   - name: check if dotnet sdk is installed
     shell: which dotnet
     register: dotnet_installed
     ignore_errors: yes
 
+- name: Manual dotnet install
+  block:
   - stat:
       path: "{{ dotnet_manual_install_directory }}"
     register: dotnet_path
