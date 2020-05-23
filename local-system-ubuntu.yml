@@ -5,7 +5,7 @@
   pre_tasks:
     - name: Use manual install of dotnet
       set_fact:
-        manual_dotnet_install: yes
+        manual_dotnet_install: no
   vars:
     apt_package_list:
       - git
