@@ -9,7 +9,7 @@ This repo is to hold my Ansible playbooks and for learning and experimentation.
 ### Install Ansible
 
 ``` bash
-./setup.sh
+./setup-<systemtype>.sh
 ```
 
 It may be required to add the local bin path to the bashrc file to access Ansible.
