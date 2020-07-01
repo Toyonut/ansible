@@ -16,7 +16,6 @@
       - postgresql-server
       - zsh
       - vim
-      - keepassxc
       - tilix
       - tlp
       - powerline-fonts

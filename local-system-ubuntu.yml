@@ -20,7 +20,6 @@
       - vim
       - fonts-powerline
       - fonts-firacode
-      - keepassxc
       - tilix
       - tlp
       - nautilus-dropbox
