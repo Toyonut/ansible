@@ -1,9 +1,7 @@
 ---
 
-- include: fedora.yml
-  when: ansible_pkg_mgr == "yum"
-
 - include: ubuntu.yml
-  when: ansible_pkg_mgr == "apt"
+  when: ansible_distribution in ["Ubuntu", "Pop!_OS"]
 
-
+- include: fedora.yml
+  when: ansible_distribution == 'Fedora'

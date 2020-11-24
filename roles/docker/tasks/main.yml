@@ -1,10 +1,10 @@
 ---
 
-- include: fedora.yml
-  when: ansible_pkg_mgr == "yum"
-
 - include: ubuntu.yml
-  when: ansible_pkg_mgr == "apt"
+  when: ansible_distribution in ["Ubuntu", "Pop!_OS"]
+
+- include: fedora.yml
+  when: ansible_distribution == 'Fedora'
 
 - name: adding existing user '{{ ansible_user_id }}' to group docker
   user:
