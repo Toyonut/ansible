@@ -34,13 +34,10 @@
       - sqlitebrowser
 
     snap_package_list:
-      - { name: bitwarden, classic: False }
       - { name: pycharm-community, classic: True }
-      - { name: sublime-text, classic: True }
       - { name: heroku, classic: True }
       - { name: intellij-idea-community, classic: True }
       - { name: code, classic: True }
-      - { name: atom, classic: True }
 
     flatpak_list:
       - { name: us.zoom.Zoom, remote: flathub}
@@ -52,6 +49,7 @@
       - { name: org.openttd.OpenTTD, remote: flathub }
       - { name: org.gnome.Geary, remote: flathub }
       - { name: org.gnome.Boxes, remote: flathub }
+      - { name: com.bitwarden.desktop, remote: flathub }
 
   roles:
     - { name: base_system_tasks, required_packages: "{{ apt_package_list }}" }
