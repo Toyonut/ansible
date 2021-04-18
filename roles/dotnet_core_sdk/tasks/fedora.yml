@@ -1,0 +1,18 @@
+---
+
+- name: Add dotnet repo
+  yum_repository:
+    name: packages-microsoft-com-prod
+    description: Microsoft dotnet core repository
+    baseurl: "{{ fedora_dotnet_baseurl }}"
+    enabled: yes
+    gpgcheck: yes
+    gpgkey: "{{ fedora_dotnet_key_url }}"
+  become: yes
+
+- name: install dotnet core
+  dnf:
+    name: "{{ dotnet_sdk }}"
+    state: latest
+    update_cache: yes
+  become: yes

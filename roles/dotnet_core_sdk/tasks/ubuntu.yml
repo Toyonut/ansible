@@ -1,0 +1,24 @@
+---
+
+- name: check if packages-microsoft-prod.deb exists
+  stat:
+    path: /tmp/packages-microsoft-prod.deb
+  register: ms_package_exists
+
+- name: download
+  get_url:
+    url: "https://packages.microsoft.com/config/ubuntu/{{ ansible_distribution_version }}/packages-microsoft-prod.deb"
+    dest: /tmp/packages-microsoft-prod.deb
+  when: not ms_package_exists.stat.exists
+
+- name: install ms package
+  apt:
+    deb: /tmp/packages-microsoft-prod.deb
+  become: yes
+
+- name: install dotnet packages and deps with apt
+  apt:
+    name: "{{ dotnet_packages }}"
+    state: latest
+    update_cache: yes
+  become: yes

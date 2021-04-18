@@ -5,90 +5,18 @@
   register: dotnet_installed
   ignore_errors: yes
 
-- name: Manual dotnet install
-  block:
-  - stat:
-      path: "{{ dotnet_manual_install_directory }}"
-    register: dotnet_path
-
-  - name: Create dotnet directory if it does not exist
-    file:
-      path: "{{ dotnet_manual_install_directory }}"
-      state: directory
-      owner: "{{ ansible_user_id }}"
-      group: "{{ ansible_user_id }}"
-      mode: '0751'
-    when: not dotnet_path.stat.exists
-
-  - name: Download dotnet package with checksum url (sha512)
-    get_url:
-      url: "{{ dotnet_manual_download_link }}"
-      dest: "/tmp/{{ dotnet_binary_package_name }}"
-      checksum: sha512:{{ dotnet_package_checksum }}
-    when: dotnet_installed.stdout != expected_dotnet_path
-
-  - name: unarchive dotnet package
-    unarchive:
-      src: "/tmp/{{ dotnet_binary_package_name }}"
-      dest: "{{ dotnet_manual_install_directory }}"
-      owner: "{{ ansible_user_id }}"
-      group: "{{ ansible_user_id }}"
-      remote_src: yes
-    when: dotnet_installed.stdout != expected_dotnet_path
-
-  - debug:
-      msg: "DOTNET_ROOT is '{{ dotnet_manual_install_directory }}', please add it to your path."
+- include: manual.yml
   when:
     - manual_dotnet_install | bool
     - dotnet_installed.rc == 1
 
-- name: Ubuntu | Install dotnet core
-  block:
-  - name: check if packages-microsoft-prod.deb exists
-    stat:
-      path: /tmp/packages-microsoft-prod.deb
-    register: ms_package_exists
-
-  - name: download
-    get_url:
-      url: "https://packages.microsoft.com/config/ubuntu/{{ ansible_distribution_version }}/packages-microsoft-prod.deb"
-      dest: /tmp/packages-microsoft-prod.deb
-    when: not ms_package_exists.stat.exists
-
-  - name: install ms package
-    apt:
-      deb: /tmp/packages-microsoft-prod.deb
-    become: yes
-
-  - name: install dotnet packages and deps with apt
-    apt:
-      name: "{{ dotnet_packages }}"
-      state: latest
-      update_cache: yes
-    become: yes
+- include: ubuntu.yml
   when:
-    - ansible_distribution in ["Ubuntu", "Pop!_OS"]
+    - ansible_distribution in ["Ubuntu", "Pop!_OS", "Linux Mint"]
     - not manual_dotnet_install | bool
     - dotnet_installed.rc == 1
 
-- name: Fedora | Install dotnet core
-  block:
-  - name: Add dotnet repo
-    yum_repository:
-      name: packages-microsoft-com-prod
-      description: Microsoft dotnet core repository
-      baseurl: "{{ fedora_dotnet_baseurl }}"
-      enabled: yes
-      gpgcheck: yes
-      gpgkey: "{{ fedora_dotnet_key_url }}"
-    become: yes
-
-  - name: install dotnet core
-    dnf:
-      name: "{{ dotnet_sdk }}"
-      state: latest
-      update_cache: yes
-    become: yes
+- include: fedora.yml
   when:
     - ansible_distribution == 'Fedora'
     - not manual_dotnet_install | bool
