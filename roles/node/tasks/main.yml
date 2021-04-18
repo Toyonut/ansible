@@ -4,7 +4,7 @@
     name: "{{ dependencies_packages }}"
     state: present
   become: yes
-  when: ansible_distribution in ["Ubuntu", "Pop!_OS"]
+  when: ansible_distribution in ["Ubuntu", "Pop!_OS", "Linux Mint"]
 
 - name: Fedora | Install dependencies
   dnf:

@@ -11,7 +11,7 @@
   become: yes
   when:
   - kvm_enabled.stdout > "0"
-  - ansible_distribution in ["Ubuntu", "Pop!_OS"]
+  - ansible_distribution in ["Ubuntu", "Pop!_OS", "Linux Mint"]
 
 - name: Fedora | Install KVM pre-requisite packages
   dnf:
@@ -38,7 +38,7 @@
     append: yes
   loop: "{{ virt_groups_ubuntu }}"
   become: yes
-  when: ansible_distribution in ["Ubuntu", "Pop!_OS"]
+  when: ansible_distribution in ["Ubuntu", "Pop!_OS", "Linux Mint"]
 
 - name: Add existing user '{{ ansible_user_id }}' to virt groups Fedora
   user:
