@@ -14,10 +14,8 @@
   when:
     - ansible_distribution in ["Ubuntu", "Pop!_OS", "Linux Mint"]
     - not manual_dotnet_install | bool
-    - dotnet_installed.rc == 1
 
 - include: fedora.yml
   when:
     - ansible_distribution == 'Fedora'
     - not manual_dotnet_install | bool
-    - dotnet_installed.rc == 1
