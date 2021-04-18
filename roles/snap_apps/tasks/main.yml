@@ -1,4 +1,10 @@
 ---
+- name: Remove snap block because Linux Mint are idealogical dicks
+  file:
+    path="/etc/apt/preferences.d/nosnap.pref"
+    state=absent
+  become: yes
+
 - name: Ubuntu | Check Snap is installed
   apt:
     name: snapd
