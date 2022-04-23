@@ -24,7 +24,6 @@
       - python3-distutils
       - apt-transport-https
       - ca-certificates
-      - postgresql
       - zsh
       - vim
       - fonts-powerline

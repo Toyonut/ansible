@@ -1,0 +1,24 @@
+- name: kill elementary appcenter
+  command: pkill -f io.elementary.appcenter
+  ignore_errors: yes
+
+- name: install pgadmin apt public key
+  apt_key:
+    url: "{{ pgadmin_repo_pubkey_url }}"
+    state: present
+    validate_certs: yes
+  become: yes
+
+- name: add pgadmin repo
+  apt_repository:
+    repo: "{{ pgadmin_repo_url }}"
+    state: present
+  become: yes
+
+- name: install postgres packages
+  apt:
+    name: "{{ postgres_packages_ubuntu }}"
+    state: latest
+    autoremove: yes
+    update_cache: yes
+  become: yes

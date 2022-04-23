@@ -2,24 +2,6 @@
   command: pkill -f io.elementary.appcenter
   ignore_errors: yes
 
-- name: install pgadmin apt public key
-  apt_key:
-    url: "{{ pgadmin_repo_pubkey_url }}"
-    state: present
-    validate_certs: yes
-  become: yes
-
-- name: add pgadmin repo
-  apt_repository:
-    repo: "{{ pgadmin_repo_url }}"
-    state: present
-  become: yes
-
-- name: add pgadmin to list of apps to install
-  set_fact:
-    all_packages: "{{ pgadmin_packages + required_packages }}"
-  when: required_packages is defined
-
 - name: update and upgrade system packages
   apt:
     update_cache: yes
@@ -28,11 +10,11 @@
 
 - name: install required packages
   apt:
-    name: "{{ all_packages }}"
+    name: "{{ required_packages }}"
     state: latest
     autoremove: yes
     update_cache: yes
-  when: all_packages is defined
+  when: required_packages is defined
   become: yes
 
 - name: ensure iio-sensor-proxy removed

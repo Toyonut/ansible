@@ -12,8 +12,6 @@
       - cheese
       - curl
       - ca-certificates
-      - postgresql
-      - postgresql-server
       - zsh
       - vim
       - tilix
