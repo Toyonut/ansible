@@ -19,6 +19,8 @@
   ignore_errors: yes
 
 - name: install Powershell if not installed
-  command: snap install powershell --classic
+  snap:
+    name: "powershell"
+    classic: yes
   when: powershell_installed.stdout != '/snap/bin/pwsh'
   become: yes
