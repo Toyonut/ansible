@@ -16,6 +16,7 @@
   when:
     - ansible_distribution in ["Ubuntu", "Pop!_OS"]
     - gnome_installed
+    - ansible_distribution_version < "21.10"
   become: yes
 
 - name: Fedora | Install Gnome extensions
