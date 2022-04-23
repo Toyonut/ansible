@@ -45,6 +45,7 @@
     - { name: base_system_tasks, required_packages: "{{ yum_package_list }}" }
     - { name: snap_apps, snap_packages: "{{ snap_package_list }}" }
     - { name: flatpaks, flatpaks: "{{ flatpak_list }}"}
+    - postgres
     - gnome_extensions
     - virtualization
     - chrome
