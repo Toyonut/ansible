@@ -1,10 +1,4 @@
 docker_packages:
-  - docker-ce
-  - docker-ce-cli
-  - containerd.io
-  - docker-compose
-
-docker_packages_focal:
   - docker.io
   - containerd
   - docker-compose

@@ -1,36 +1,8 @@
 ---
-# install docker from repo on 20.04 for now until docker CE is supported.
 
-- name: get docker gpg key
-  get_url:
-    url: https://download.docker.com/linux/ubuntu/gpg
-    dest: /tmp/docker_gpg
-  when: ansible_distribution_version < "20.04"
-
-- name: install docker gpg key
-  command: apt-key add /tmp/docker_gpg
-  become: yes
-  when: ansible_distribution_version < "20.04"
-
-- name: add docker repo
-  apt_repository:
-    repo: "deb [arch=amd64] https://download.docker.com/linux/ubuntu {{ ansible_distribution_release }} stable"
-    state: present
-  become: yes
-  when: ansible_distribution_version < "20.04"
-
-- name: install required packages pre focal
+- name: install docker packages
   apt:
     name: "{{ docker_packages }}"
     state: latest
     update_cache: yes
   become: yes
-  when: ansible_distribution_version < "20.04"
-
-- name: install required packages focal
-  apt:
-    name: "{{ docker_packages_focal }}"
-    state: latest
-    update_cache: yes
-  become: yes
-  when: ansible_distribution_version == "20.04"
