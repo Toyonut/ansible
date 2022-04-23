@@ -1,4 +1,4 @@
-dotnet_sdk_package: dotnet-sdk-5.0
+dotnet_sdk_package: dotnet-sdk-6.0
 
 dotnet_sdk_requirements:
   - apt-transport-https
@@ -16,19 +16,7 @@ dotnet_packages: "{{ dotnet_sdk_requirements + dotnet_targetting_packs }}"
 fedora_dotnet_baseurl: "https://packages.microsoft.com/fedora/{{ ansible_distribution_version }}/prod/"
 fedora_dotnet_key_url: "https://packages.microsoft.com/keys/microsoft.asc"
 
-# Manual install for if packages aren't available
-manual_dotnet_install: no
-manual_dependencies:
-- libc6
-- libgcc1
-- libgssapi-krb5-2
-- libicu67
-- libssl1.1
-- libstdc++6
-- zlib1g
+# Snap package install for if packages aren't available
+snap_dotnet_install: no
 
-dotnet_binary_package_name: "dotnet-sdk-3.1.408-linux-x64.tar.gz"
-dotnet_manual_download_link: "https://download.visualstudio.microsoft.com/download/pr/2054b462-43da-4c61-9e2d-d02167c71c40/a8be03062d9d770c8025c7de47ca366d/{{ dotnet_binary_package_name }}"
-dotnet_package_checksum: "5e2c378addf337c1b7e44583718672e0791235150630f0b613353c8597342dcaae3b7c412b17d5e6d93d87b5708a6ca2dc16ff6e6c5a2101b224d24e6a5c4e7a"
-dotnet_manual_install_directory: "/home/{{ ansible_user_id }}/dotnet"
 expected_dotnet_path: "/home/{{ ansible_user_id }}/dotnet/dotnet"

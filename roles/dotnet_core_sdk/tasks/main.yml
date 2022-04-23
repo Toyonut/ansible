@@ -5,17 +5,21 @@
   register: dotnet_installed
   ignore_errors: yes
 
-- include: manual.yml
-  when:
-    - manual_dotnet_install | bool
-    - dotnet_installed.rc == 1
-
 - include: ubuntu.yml
   when:
     - ansible_distribution in ["Ubuntu", "Pop!_OS", "Linux Mint"]
-    - not manual_dotnet_install | bool
+    - not snap_dotnet_install | bool
 
 - include: fedora.yml
   when:
     - ansible_distribution == 'Fedora'
-    - not manual_dotnet_install | bool
+    - not snap_dotnet_install | bool
+
+- name: install Dotnet sdk from snap
+  snap:
+    name: "dotnet-sdk"
+    classic: yes
+  become: yes
+  when:
+    - snap_dotnet_install | bool
+    - dotnet_installed.rc == 1

@@ -3,9 +3,9 @@
   connection: local
   hosts: 127.0.0.1
   pre_tasks:
-    - name: Use manual install of dotnet
+    - name: Use snap install of dotnet
       set_fact:
-        manual_dotnet_install: no
+        snap_dotnet_install: yes
     - name: Set proper codename
       set_fact:
         ansible_distribution_release: "focal"
