@@ -23,8 +23,6 @@
       - steam
       - remmina
       - ffmpeg
-      - fuse-exfat
-      - exfat-utils
       - sqlitebrowser
 
     snap_package_list:
