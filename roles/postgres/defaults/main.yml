@@ -3,6 +3,8 @@ postgresql_data_dir: "/var/lib/pgsql/data"
 pgadmin_repo_pubkey_url: "https://www.pgadmin.org/static/packages_pgadmin_org.pub"
 pgadmin_repo_url: "deb https://ftp.postgresql.org/pub/pgadmin/pgadmin4/apt/{{ ansible_distribution_release }} pgadmin4 main"
 
+pgadmin_repo_url_fedora: "https://ftp.postgresql.org/pub/pgadmin/pgadmin4/yum/pgadmin4-fedora-repo-2-1.noarch.rpm"
+
 postgres_packages_fedora:
   - postgresql
   - postgresql-server

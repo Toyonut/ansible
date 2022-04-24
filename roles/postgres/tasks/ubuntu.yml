@@ -1,3 +1,5 @@
+---
+
 - name: kill elementary appcenter
   command: pkill -f io.elementary.appcenter
   ignore_errors: yes
