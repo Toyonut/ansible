@@ -9,3 +9,8 @@ postgres_packages_fedora:
 
 postgres_packages_ubuntu:
   - postgresql
+
+install_pgadmin: no
+
+pgagmin_package:
+  - "pgadmin4-desktop"

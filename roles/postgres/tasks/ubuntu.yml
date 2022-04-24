@@ -7,13 +7,20 @@
     url: "{{ pgadmin_repo_pubkey_url }}"
     state: present
     validate_certs: yes
+  when: install_pgadmin
   become: yes
 
 - name: add pgadmin repo
   apt_repository:
     repo: "{{ pgadmin_repo_url }}"
     state: present
+  when: install_pgadmin
   become: yes
+
+- name: add pgadmin to postgres packages
+  set_fact:
+    postgres_packages_ubuntu: "{{ postgres_packages_ubuntu }} + {{ pgagmin_package }}"
+  when: install_pgadmin
 
 - name: install postgres packages
   apt:
