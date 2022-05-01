@@ -5,10 +5,10 @@
   pre_tasks:
     - name: Use snap install of dotnet
       set_fact:
-        snap_dotnet_install: yes
+        snap_dotnet_install: no
     - name: install pgadmin4
       set_fact:
-        install_pgadmin: yes
+        install_pgadmin: no
     - name: Set proper codename
       set_fact:
         ansible_distribution_release: "focal"
