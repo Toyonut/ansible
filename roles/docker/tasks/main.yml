@@ -1,9 +1,9 @@
 ---
 
-- include: ubuntu.yml
+- include_tasks: ubuntu.yml
   when: ansible_distribution in ["Ubuntu", "Pop!_OS", "Linux Mint"]
 
-- include: fedora.yml
+- include_tasks: fedora.yml
   when: ansible_distribution == 'Fedora'
 
 - name: adding existing user '{{ ansible_user_id }}' to group docker

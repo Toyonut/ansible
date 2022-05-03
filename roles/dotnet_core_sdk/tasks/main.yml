@@ -5,12 +5,12 @@
   register: dotnet_installed
   ignore_errors: yes
 
-- include: ubuntu.yml
+- include_tasks: ubuntu.yml
   when:
     - ansible_distribution in ["Ubuntu", "Pop!_OS", "Linux Mint"]
     - not snap_dotnet_install | bool
 
-- include: fedora.yml
+- include_tasks: fedora.yml
   when:
     - ansible_distribution == 'Fedora'
     - not snap_dotnet_install | bool
