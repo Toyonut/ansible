@@ -8,3 +8,7 @@ ubuntu_gnome_extensions:
   - gnome-shell-extension-ubuntu-dock
   - gnome-shell-extension-appindicator
   - gnome-tweak-tool
+
+new_gnome_apps:
+  - gnome-text-editor
+  - gnome-console

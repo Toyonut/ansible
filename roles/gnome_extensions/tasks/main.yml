@@ -9,6 +9,26 @@
     gnome_installed: true
   when: lookup('env','GDMSESSION') in ['gnome-shell', 'pop', 'ubuntu']
 
+- name: Ubuntu | Install Gnome apps
+  apt:
+    name: "{{ new_gnome_apps }}"
+    state: present
+  when:
+    - ansible_distribution in ["Ubuntu", "Pop!_OS"]
+    - gnome_installed
+    - ansible_distribution_version >= "22.04"
+  become: yes
+
+- name: Fedora | Install Gnome apps
+  dnf:
+    name: "{{ new_gnome_apps }}"
+    state: present
+  when:
+    - ansible_distribution == "Fedora"
+    - gnome_installed
+    - ansible_distribution_version >= "36"
+  become: yes
+
 - name: Ubuntu | Install Gnome extensions
   apt:
     name: "{{ ubuntu_gnome_extensions }}"
@@ -21,7 +41,7 @@
 
 - name: Fedora | Install Gnome extensions
   dnf:
-    name: "{{ fedora_gnome_extensions}}"
+    name: "{{ fedora_gnome_extensions }}"
     state: present
   when:
     - ansible_distribution == "Fedora"
