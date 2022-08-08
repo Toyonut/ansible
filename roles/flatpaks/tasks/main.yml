@@ -28,6 +28,10 @@
   with_items: "{{ flatpak_repos }}"
   become: yes
 
+- name: Don't filter flathub
+  ansible.builtin.command: "flatpak remote-modify flathub --no-filter"
+  become: yes  
+
 - name: Install Flatpak apps
   flatpak:
     name: "{{ item.name }}"
