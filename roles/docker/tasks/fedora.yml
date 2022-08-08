@@ -12,7 +12,7 @@
 
 - name: Install required packages
   dnf:
-    name: "{{ docker_packages }}"
+    name: "{{ docker_packages_fedora }}"
     state: latest
     update_cache: yes
   become: yes

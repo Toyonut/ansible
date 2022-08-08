@@ -2,7 +2,7 @@
 
 - name: install docker packages
   apt:
-    name: "{{ docker_packages }}"
+    name: "{{ docker_packages_ubuntu }}"
     state: latest
     update_cache: yes
   become: yes

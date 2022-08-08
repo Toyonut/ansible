@@ -1,6 +1,10 @@
-docker_packages:
+docker_packages_ubuntu:
   - docker.io
   - containerd
+  - docker-compose
+
+docker_packages_fedora:
+  - docker-ce
   - docker-compose
 
 # fedora
