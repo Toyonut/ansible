@@ -12,7 +12,7 @@
 
 - name: install dotnet core
   dnf:
-    name: "{{ dotnet_sdk }}"
+    name: "{{ dotnet_sdk_package }}"
     state: latest
     update_cache: yes
   become: yes

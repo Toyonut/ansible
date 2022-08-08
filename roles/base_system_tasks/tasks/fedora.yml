@@ -4,6 +4,7 @@
   dnf:
     name: "{{ rpm_fusion_repos }}"
     state: present
+    disable_gpg_check: yes
   become: yes
 
 - name: Install required packages
