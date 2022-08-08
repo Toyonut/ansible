@@ -1,5 +1,6 @@
 #!/usr/bin/env bash
 
+sudo dnf install python3-pip -y
 pip3 install --user -r ./requirements.txt
 
 NEEDED_PATH="${HOME}/.local/bin"
