@@ -22,6 +22,7 @@
       - remmina
       - ffmpeg
       - sqlitebrowser
+      - gnome-tweak-tool
 
     snap_package_list:
       - { name: pycharm-community, classic: True }
@@ -40,6 +41,7 @@
       - { name: org.gnome.Geary, remote: flathub }
       - { name: org.gnome.Boxes, remote: flathub }
       - { name: com.bitwarden.desktop, remote: flathub }
+      - { name: com.mattjakeman.ExtensionManager, remote: flathub }
 
   roles:
     - { name: base_system_tasks, required_packages: "{{ yum_package_list }}" }
