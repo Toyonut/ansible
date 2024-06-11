@@ -20,7 +20,6 @@
       - transmission
       - steam
       - remmina
-      - ffmpeg
       - sqlitebrowser
       - gnome-tweak-tool
 
@@ -28,7 +27,6 @@
       - { name: pycharm-community, classic: True }
       - { name: heroku, classic: True }
       - { name: intellij-idea-community, classic: True }
-      - { name: code, classic: True }
 
     flatpak_list:
       - { name: us.zoom.Zoom, remote: flathub}
@@ -55,3 +53,4 @@
     - dotnet_core_sdk
     - docker
     - node
+    - vscode
