@@ -25,7 +25,6 @@
 
     snap_package_list:
       - { name: pycharm-community, classic: True }
-      - { name: heroku, classic: True }
       - { name: intellij-idea-community, classic: True }
 
     flatpak_list:
