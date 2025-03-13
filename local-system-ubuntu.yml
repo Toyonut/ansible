@@ -9,13 +9,6 @@
     - name: install pgadmin4
       set_fact:
         install_pgadmin: no
-    - name: Set proper codename
-      set_fact:
-        ansible_distribution_release: "focal"
-        ansible_distribution_version: "20.04"
-      when:
-        - ansible_distribution in ["Linux Mint"]
-        - ansible_distribution_version.startswith('20')
 
   vars:
     apt_package_list:
@@ -32,8 +25,6 @@
       - fonts-powerline
       - fonts-firacode
       - tilix
-      - tlp
-      - nautilus-dropbox
       - python3
       - transmission
       - steam
