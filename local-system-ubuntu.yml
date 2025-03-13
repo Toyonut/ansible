@@ -35,7 +35,6 @@
     snap_package_list:
       - { name: pycharm-community, classic: True }
       - { name: intellij-idea-community, classic: True }
-      - { name: code, classic: True }
 
     flatpak_list:
       - { name: us.zoom.Zoom, remote: flathub}
@@ -61,3 +60,4 @@
     - dotnet_core_sdk
     - docker
     - node
+    - vscode
