@@ -46,7 +46,7 @@
   ansible.builtin.file:
     src: restart-touchpad
     dest: /lib/systemd/system-sleep/restart-touchpad
-    mode: '0751'
+    mode: '0755'
     owner: root
     group: root
   become: yes
