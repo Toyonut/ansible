@@ -41,3 +41,12 @@
     autoremove: yes
     purge: yes
   become: yes
+
+- name: Stupid touchpad fix
+  ansible.builtin.file:
+    src: restart-touchpad
+    dest: /lib/systemd/system-sleep/restart-touchpad
+    mode: '0751'
+    owner: root
+    group: root
+  become: yes
